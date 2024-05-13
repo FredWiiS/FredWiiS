@@ -1,0 +1,1086 @@
+<connector version="3.4.2">
+  <metaDataId>19</metaDataId>
+  <name>Insert SIU^S14 - Patient Accueilli</name>
+  <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.4.2">
+    <pluginProperties/>
+    <destinationConnectorProperties version="3.4.2">
+      <queueEnabled>false</queueEnabled>
+      <sendFirst>false</sendFirst>
+      <retryIntervalMillis>10000</retryIntervalMillis>
+      <regenerateTemplate>false</regenerateTemplate>
+      <retryCount>0</retryCount>
+      <rotate>false</rotate>
+      <includeFilterTransformer>false</includeFilterTransformer>
+      <threadCount>1</threadCount>
+      <threadAssignmentVariable></threadAssignmentVariable>
+      <validateResponse>false</validateResponse>
+      <resourceIds class="linked-hash-map">
+        <entry>
+          <string>Default Resource</string>
+          <string>[Default Resource]</string>
+        </entry>
+      </resourceIds>
+      <queueBufferSize>1000</queueBufferSize>
+    </destinationConnectorProperties>
+    <script>var dbConn;
+channelMap.put (&apos;insert_hl7_message_send_error&apos;, &apos;&apos;);
+
+try {
+	dbConn = getDBConnection();
+
+	var query = &apos;INSERT INTO hl7_message_send ( \
+			task_id, \
+			hl7_server_id, \
+			receiving_application, \
+			message_datetime, \
+			message_type, \
+			control_id, \
+			patient_id, \
+			study_id, \
+			document_id, \
+			form_filled_id, \
+			message) \
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)&apos;;
+	
+	var result = dbConn.executeUpdate(query, [
+			$(&apos;task_id&apos;),
+			$(&apos;hl7_server_id&apos;),
+			$(&apos;hl7_server_application&apos;),
+			DateUtil.getCurrentDate(&quot;yyyyMMddHHmmss&quot;),
+			&apos;SIU^S14&apos; ,
+			$(&apos;messageHeader_messageControlId_value&apos;),
+			$(&apos;patient_id&apos;),
+			parseInt($(&apos;study_id&apos;).toString()) || null,
+			parseInt($(&apos;document_id&apos;).toString()) || null,
+			parseInt($(&apos;form_filled_id&apos;).toString()) || null,
+			connectorMessage.getEncodedData().toString() 
+		]);
+
+
+	 // logger.info( &apos;mapping : &apos;+  connectorMessage.getTransformedData() )
+	
+
+
+} catch(ex) {
+	var message = ex.message + &apos; &apos; + connectorMessage.getRawData();
+	logToFile(message);	
+	error= true
+	error_status=ERROR
+	/* UPDATE de la tâche si erreur */
+	var query = &apos;UPDATE task SET status = \&apos;FAILED\&apos; WHERE id = ?&apos;;
+	var result = dbConn.executeUpdate(query, [$(&apos;task_id&apos;)]);
+	
+	channelMap.put(&apos;insert_hl7_message_send_error&apos;, ex.message );
+	
+} finally {
+
+	if (dbConn) { 
+		dbConn.close();
+	}
+}</script>
+  </properties>
+  <transformer version="3.4.2">
+    <steps>
+      <step>
+        <sequenceNumber>0</sequenceNumber>
+        <name>MSH - MSH.5 - MSH.5.1 (out) &lt;-- hl7_server_application (in)</name>
+        <script>tmp[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;] = validate($(&apos;hl7_server_application&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;hl7_server_application&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>1</sequenceNumber>
+        <name>MSH - MSH.6 - MSH.6.1 (out) &lt;-- hl7_server_facility (in)</name>
+        <script>tmp[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;] = validate($(&apos;hl7_server_facility&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;hl7_server_facility&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>2</sequenceNumber>
+        <name>MSH - MSH.7 - MSH.7.1 (out)</name>
+        <script>tmp[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;] = validate(DateUtil.getCurrentDate(&quot;yyyyMMddHHmmss&quot;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>DateUtil.getCurrentDate(&quot;yyyyMMddHHmmss&quot;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>3</sequenceNumber>
+        <name>Message Header - Message Type (MSH.9) (out)</name>
+        <script>tmp[&apos;MSH&apos;][&apos;MSH.9&apos;] = validate(&apos;SIU^S14&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;MSH&apos;][&apos;MSH.9&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;SIU^S14&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>4</sequenceNumber>
+        <name>MSH - MSH.10 - MSH.10.1 (out)</name>
+        <script>tmp[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;] = validate(DateUtil.getCurrentDate(&quot;yyyyMMddHHmmss&quot;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>DateUtil.getCurrentDate(&quot;yyyyMMddHHmmss&quot;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>5</sequenceNumber>
+        <name>Schedule Activity Information - Filler Appointment ID - Entity Identifier (SCH.2.1) (out)</name>
+        <script>tmp[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;] = validate($(&apos;study_accession_number&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;study_accession_number&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>6</sequenceNumber>
+        <name>Schedule Activity Information - Appointment Type - Identifier (SCH.8.1) (out)</name>
+        <script>tmp[&apos;SCH&apos;][&apos;SCH.8&apos;][&apos;SCH.8.1&apos;] = validate($(&apos;study_study_type_code&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;SCH&apos;][&apos;SCH.8&apos;][&apos;SCH.8.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;study_study_type_code&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>7</sequenceNumber>
+        <name>Schedule Activity Information - Filler Status Code - Identifier (SCH.25.1) (out)</name>
+        <script>tmp[&apos;SCH&apos;][&apos;SCH.25&apos;][&apos;SCH.25.1&apos;] = validate(&apos;Patient CheckIn^Patient CheckIn&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;SCH&apos;][&apos;SCH.25&apos;][&apos;SCH.25.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;Patient CheckIn^Patient CheckIn&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>8</sequenceNumber>
+        <name>Patient Identification - Patient Identifier List - ID (PID.2.1) (out) &lt;-- patient_hl7_patient_patient_id (in) OR patient_ID</name>
+        <script>if  ($(&apos;patient_hl7_patient_patient_id&apos;) !=&apos;&apos; ){ 
+		tmp[&apos;PID&apos;][&apos;PID.2&apos;][&apos;PID.2.1&apos;] = validate($(&apos;patient_hl7_patient_patient_id&apos;), &apos;&apos;, new Array())
+}else{
+	     tmp[&apos;PID&apos;][&apos;PID.2&apos;][&apos;PID.2.1&apos;] = validate($(&apos;patient_id&apos;), &apos;&apos;, new Array())
+}</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>if  ($(&apos;patient_hl7_patient_patient_id&apos;) !=&apos;&apos; ){ 
+		tmp[&apos;PID&apos;][&apos;PID.2&apos;][&apos;PID.2.1&apos;] = validate($(&apos;patient_hl7_patient_patient_id&apos;), &apos;&apos;, new Array())
+}else{
+	     tmp[&apos;PID&apos;][&apos;PID.2&apos;][&apos;PID.2.1&apos;] = validate($(&apos;patient_id&apos;), &apos;&apos;, new Array())
+}</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>9</sequenceNumber>
+        <name>Patient Identification - Patient Identifier List - ID (PID.3.1) (out) &lt;-- patient_hl7_patient_patient_id (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;] = validate($(&apos;identifiant_hl7&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;identifiant_hl7&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>10</sequenceNumber>
+        <name>Patient Identification - Patient Name - Family Last Name (PID.5.1) (out)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;] = validate($(&apos;patient_last_name&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_last_name&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>11</sequenceNumber>
+        <name>Patient Identification - Patient Name - Given Name (PID.5.2) (out) &lt;-- patient_first_name (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;] = validate($(&apos;patient_first_name&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_first_name&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>12</sequenceNumber>
+        <name>type de nom</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.7&apos;] = validate(&apos;L&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.7&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;L&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>13</sequenceNumber>
+        <name>Patient Identification - Date  of Birth - Time of An Event (PID.7.1) (out) &lt;-- patient_birthdate (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;] = validate(DateUtil.convertDate( &apos;yyyy-MM-dd&apos;, &apos;yyyyMMdd&apos;, $(&apos;patient_birthdate&apos;) ), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>DateUtil.convertDate( &apos;yyyy-MM-dd&apos;, &apos;yyyyMMdd&apos;, $(&apos;patient_birthdate&apos;) )</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>14</sequenceNumber>
+        <name>Patient Identification - Sex - Value (PID.8.1) (out) &lt;-- patient_sex (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;] = validate($(&apos;patient_sex&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_sex&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>15</sequenceNumber>
+        <name>Patient Identification - Patient Address - Street Address (PID.11.1) (out) &lt;-- patient_street_address (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = validate($(&apos;patient_street_address&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_street_address&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>16</sequenceNumber>
+        <name>Patient Identification - Patient Address - City (PID.11.3) (out) &lt;-- patient_city (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;] = validate($(&apos;patient_city&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_city&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>17</sequenceNumber>
+        <name>Patient Identification - Patient Address - State or Province (PID.11.4) (out) &lt;-- patient_state (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;] = validate($(&apos;patient_state&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_state&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>18</sequenceNumber>
+        <name>Patient Identification - Patient Address - Zip or Postal Code (PID.11.5) (out) &lt;-- patient_zip_code (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;] = validate($(&apos;patient_zip_code&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_zip_code&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>19</sequenceNumber>
+        <name>Patient Identification - Phone Number - Home - [(999)] 999-9999 [x99999][c Any Text] (PID.13.1) (out) &lt;-- patient_private_phone_number (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;] = validate($(&apos;patient_private_phone_number&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_private_phone_number&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>20</sequenceNumber>
+        <name>Patient Identification - Phone Number - Business - [(999)] 999-9999 [x99999][c Any Text] (PID.14.1) (out) &lt;-- patient_business_phone_number (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;] = validate($(&apos;patient_business_phone_number&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_business_phone_number&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>21</sequenceNumber>
+        <name>Patient Identification - Patient Account Number - ID (PID.18.1) (out) &lt;-- patient_hl7_patient_patient_id (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.18&apos;][&apos;PID.18.1&apos;] = validate($(&apos;patient_hl7_patient_patient_id&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.18&apos;][&apos;PID.18.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_hl7_patient_patient_id&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>22</sequenceNumber>
+        <name>Patient Visit - Patient Class - Value (PV1.2.1) (out)</name>
+        <script>tmp[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;] = validate($(&apos;visit_patient_class&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;visit_patient_class&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>23</sequenceNumber>
+        <name>Patient Visit - Assigned Patient Location - Point of Care (PV1.3.1) (out)</name>
+        <script>tmp[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;] = validate($(&apos;visit_description&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;visit_description&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>24</sequenceNumber>
+        <name>Patient Identification - SSN Number - Patient - Value (PID.19.1) (out) &lt;-- patient_ssn_number (in)</name>
+        <script>tmp[&apos;PID&apos;][&apos;PID.19&apos;][&apos;PID.19.1&apos;] = validate($(&apos;patient_ssn_number&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;PID&apos;][&apos;PID.19&apos;][&apos;PID.19.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_ssn_number&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>25</sequenceNumber>
+        <name>Appointment Information - Service - Universal Service ID - Identifier (AIS.3.1) (out)</name>
+        <script>if ($(&apos;study_modality_code&apos;) == &apos;&apos; || $(&apos;study_modality_code&apos;) == null){
+	tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_study_type_code&apos;) 
+}
+else {
+	tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_modality_code&apos;)
+}
+//tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_study_type_code&apos;)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>if ($(&apos;study_modality_code&apos;) == &apos;&apos; || $(&apos;study_modality_code&apos;) == null){
+	tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_study_type_code&apos;) 
+}
+else {
+	tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_modality_code&apos;)
+}
+//tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;] = $(&apos;study_study_type_code&apos;)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>26</sequenceNumber>
+        <name>Appointment Information - Service - Universal Service ID - Name of Coding System (AIS.3.3) (out)</name>
+        <script>tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.3&apos;] = validate(&apos;BEA&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.3&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;BEA&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>27</sequenceNumber>
+        <name>Appointment Information - Service - Start Date/Time Offset Units - Identifier (AIS.6.1) (out)</name>
+        <script>tmp[&apos;AIS&apos;][&apos;AIS.6&apos;][&apos;AIS.6.1&apos;] = validate(DateUtil.convertDate( &apos;yyyy-MM-dd HH:mm:ss&apos;, &apos;yyyyMMddHHmm&apos;,$(&apos;study_scheduled_datetime&apos;)), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;AIS&apos;][&apos;AIS.6&apos;][&apos;AIS.6.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>DateUtil.convertDate( &apos;yyyy-MM-dd HH:mm:ss&apos;, &apos;yyyyMMddHHmm&apos;,$(&apos;study_scheduled_datetime&apos;))</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>28</sequenceNumber>
+        <name>Appointment Information - Location Resource - Location Resource ID - Point of Care (AIL.3.1) (out)</name>
+        <script>tmp[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.1&apos;] = validate($(&apos;study_location_code&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;study_location_code&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>29</sequenceNumber>
+        <name>Notes and Comments - Set ID - Value (NTE.1.1) (out)</name>
+        <script>tmp[&apos;NTE&apos;][&apos;NTE.1&apos;][&apos;NTE.1.1&apos;] = validate(&apos;1&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;NTE&apos;][&apos;NTE.1&apos;][&apos;NTE.1.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;1&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>30</sequenceNumber>
+        <name>Notes and Comments - Source of Comment - Value (NTE.2.1) (out)</name>
+        <script>tmp[&apos;NTE&apos;][&apos;NTE.2&apos;][&apos;NTE.2.1&apos;] = validate(&apos;O&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;NTE&apos;][&apos;NTE.2&apos;][&apos;NTE.2.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;O&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>31</sequenceNumber>
+        <name>Notes and Comments - Comment - Value (NTE.3.1) (out)</name>
+        <script>tmp[&apos;NTE&apos;][&apos;NTE.3&apos;][&apos;NTE.3.1&apos;] = validate($(&apos;patient_admit_borne_code&apos;), &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;NTE&apos;][&apos;NTE.3&apos;][&apos;NTE.3.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>$(&apos;patient_admit_borne_code&apos;)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>32</sequenceNumber>
+        <name>Notes and Comments - Comment Type - Identifier (NTE.4.1) (out)</name>
+        <script>tmp[&apos;NTE&apos;][&apos;NTE.4&apos;][&apos;NTE.4.1&apos;] = validate(&apos;RE&apos;, &apos;&apos;, new Array());</script>
+        <type>Message Builder</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>tmp[&apos;NTE&apos;][&apos;NTE.4&apos;][&apos;NTE.4.1&apos;]</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>&apos;RE&apos;</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+        </data>
+      </step>
+    </steps>
+    <inboundTemplate encoding="base64">TVNIfF5+XCZ8QkVBfFdJSVN8fHx8fE9SVV5SMDF8fFB8Mi4zLjEKUElEfDF8fHx8Xl5eXnx8fHx8
+fF5eXl58fHx8fHx8fApQVjF8MXxPfHx8fHx8fHx8fHx8fHx8fHx8fHx8fA==</inboundTemplate>
+    <outboundTemplate encoding="base64">TVNIfF5+XCZ8QkVBfFdJSVN8fHx8fFNJVV5TMTR8fFB8Mi4zLjF8fHx8fHxVVEYtOHxGUgpTQ0h8
+fHx8fHx8fHx8fHx8fHx8fHx8fHx8Xl5efHx8fHwKTlRFfDF8fHxSRQ1QSUR8fHx8fF5eXl5eXkx8
+fHx8fHxeXl5efHxeXl58fHx8fHwKUFYxfDF8fHx8fHx8fHx8ClJHU3wxfFV8fApBSVN8MXxVfHx8
+fHx8fHwKQUlMfDF8VXx8fHx8fHx8DQ==</outboundTemplate>
+    <inboundDataType>HL7V2</inboundDataType>
+    <outboundDataType>HL7V2</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </outboundProperties>
+  </transformer>
+  <responseTransformer version="3.4.2">
+    <steps/>
+    <inboundDataType>HL7V2</inboundDataType>
+    <outboundDataType>HL7V2</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </outboundProperties>
+  </responseTransformer>
+  <filter version="3.4.2">
+    <rules>
+      <rule>
+        <sequenceNumber>0</sequenceNumber>
+        <name>Accept message if &quot;$(&apos;task_action&apos;)&quot; equals &apos;PARTIAL_ADMISSION&apos; or &apos;COMPLETE_ADMISSION&apos; </name>
+        <data>
+          <entry>
+            <string>Field</string>
+            <string>$(&apos;task_action&apos;)</string>
+          </entry>
+          <entry>
+            <string>Name</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>OriginalField</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>Equals</string>
+            <string>1</string>
+          </entry>
+          <entry>
+            <string>Values</string>
+            <list>
+              <string>&apos;PARTIAL_ADMISSION&apos;</string>
+              <string>&apos;COMPLETE_ADMISSION&apos; </string>
+            </list>
+          </entry>
+        </data>
+        <type>Rule Builder</type>
+        <script>if($(&apos;task_action&apos;) == &apos;PARTIAL_ADMISSION&apos; || $(&apos;task_action&apos;) == &apos;COMPLETE_ADMISSION&apos; ) {
+	return true;
+}
+return false;</script>
+        <operator>NONE</operator>
+      </rule>
+    </rules>
+  </filter>
+  <transportName>JavaScript Writer</transportName>
+  <mode>DESTINATION</mode>
+  <enabled>true</enabled>
+  <waitForPrevious>true</waitForPrevious>
+</connector>

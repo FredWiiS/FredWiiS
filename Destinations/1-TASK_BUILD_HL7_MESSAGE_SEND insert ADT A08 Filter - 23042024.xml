@@ -1,0 +1,110 @@
+<filter version="3.4.2">
+  <rules>
+    <rule>
+      <sequenceNumber>0</sequenceNumber>
+      <name>Accept message if &quot;$(&apos;hl7_server_application&apos;)&quot; equals &apos;EDL&apos; or &apos;VENUSRIS&apos; or &apos;NEHS&apos; or &apos;GXD5RIS&apos;</name>
+      <data>
+        <entry>
+          <string>Field</string>
+          <string>$(&apos;hl7_server_application&apos;)</string>
+        </entry>
+        <entry>
+          <string>Name</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>OriginalField</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>Equals</string>
+          <string>1</string>
+        </entry>
+        <entry>
+          <string>Values</string>
+          <list>
+            <string>&apos;EDL&apos;</string>
+            <string>&apos;VENUSRIS&apos;</string>
+            <string>&apos;NEHS&apos;</string>
+            <string>&apos;GXD5RIS&apos;</string>
+          </list>
+        </entry>
+      </data>
+      <type>Rule Builder</type>
+      <script>if($(&apos;hl7_server_application&apos;) == &apos;EDL&apos; || $(&apos;hl7_server_application&apos;) == &apos;VENUSRIS&apos; || $(&apos;hl7_server_application&apos;) == &apos;NEHS&apos; || $(&apos;hl7_server_application&apos;) == &apos;GXD5RIS&apos;) {
+	return true;
+}
+return false;</script>
+      <operator>NONE</operator>
+    </rule>
+    <rule>
+      <sequenceNumber>1</sequenceNumber>
+      <name>Accept message if &quot;$(&apos;task_action&apos;)&quot; equals &apos;PATIENT_UPDATED&apos;</name>
+      <data>
+        <entry>
+          <string>Field</string>
+          <string>$(&apos;task_action&apos;)</string>
+        </entry>
+        <entry>
+          <string>Name</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>OriginalField</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>Equals</string>
+          <string>1</string>
+        </entry>
+        <entry>
+          <string>Values</string>
+          <list>
+            <string>&apos;PATIENT_UPDATED&apos;</string>
+          </list>
+        </entry>
+      </data>
+      <type>Rule Builder</type>
+      <script>if($(&apos;task_action&apos;) == &apos;PATIENT_UPDATED&apos;) {
+	return true;
+}
+return false;</script>
+      <operator>AND</operator>
+    </rule>
+    <rule>
+      <sequenceNumber>2</sequenceNumber>
+      <name>Accept message if &quot;$(&apos;patient_last_name&apos;)&quot; does not equal null or &apos;&apos;</name>
+      <data>
+        <entry>
+          <string>Field</string>
+          <string>$(&apos;patient_last_name&apos;)</string>
+        </entry>
+        <entry>
+          <string>Name</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>OriginalField</string>
+          <string></string>
+        </entry>
+        <entry>
+          <string>Equals</string>
+          <string>0</string>
+        </entry>
+        <entry>
+          <string>Values</string>
+          <list>
+            <string>null</string>
+            <string>&apos;&apos;</string>
+          </list>
+        </entry>
+      </data>
+      <type>Rule Builder</type>
+      <script>if($(&apos;patient_last_name&apos;) != null &amp;&amp; $(&apos;patient_last_name&apos;) != &apos;&apos;) {
+	return true;
+}
+return false;</script>
+      <operator>AND</operator>
+    </rule>
+  </rules>
+</filter>

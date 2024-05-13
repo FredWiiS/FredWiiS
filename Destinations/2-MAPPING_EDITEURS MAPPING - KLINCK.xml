@@ -1,0 +1,2560 @@
+<connector version="3.4.2">
+  <metaDataId>121</metaDataId>
+  <name>MAPPING - KLINCK</name>
+  <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.4.2">
+    <pluginProperties/>
+    <destinationConnectorProperties version="3.4.2">
+      <queueEnabled>false</queueEnabled>
+      <sendFirst>false</sendFirst>
+      <retryIntervalMillis>10000</retryIntervalMillis>
+      <regenerateTemplate>false</regenerateTemplate>
+      <retryCount>0</retryCount>
+      <rotate>false</rotate>
+      <includeFilterTransformer>false</includeFilterTransformer>
+      <threadCount>1</threadCount>
+      <threadAssignmentVariable></threadAssignmentVariable>
+      <validateResponse>false</validateResponse>
+      <resourceIds class="linked-hash-map">
+        <entry>
+          <string>Default Resource</string>
+          <string>[Default Resource]</string>
+        </entry>
+      </resourceIds>
+      <queueBufferSize>1000</queueBufferSize>
+    </destinationConnectorProperties>
+    <script>/* mapping éditeur */</script>
+  </properties>
+  <transformer version="3.4.2">
+    <steps>
+      <step>
+        <sequenceNumber>0</sequenceNumber>
+        <name>messageHeader_sendingApplication_namespaceId</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString().slice(0, 20); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_sendingApplication_namespaceId&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_sendingApplication_namespaceId</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;].toString().slice(0, 20)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>1</sequenceNumber>
+        <name>messageHeader_sendingFacility_namespaceId</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString().slice(0, 20); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_sendingFacility_namespaceId&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_sendingFacility_namespaceId</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString().slice(0, 20)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>2</sequenceNumber>
+        <name>messageHeader_dateOrTimeOfMessage_timeOfAnEvent</name>
+        <script>var mapping;
+
+try {
+	mapping = dateParser(msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;].toString())
+} catch (e) {
+	logger.error(&apos;Can not parse MSH0701 &apos; + e.message)		
+}
+
+channelMap.put(&apos;messageHeader_dateOrTimeOfMessage_timeOfAnEvent&apos;, mapping);</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var mapping;
+
+try {
+	mapping = dateParser(msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;].toString())
+} catch (e) {
+	logger.error(&apos;Can not parse MSH0701 &apos; + e.message)		
+}
+
+channelMap.put(&apos;messageHeader_dateOrTimeOfMessage_timeOfAnEvent&apos;, mapping);</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>3</sequenceNumber>
+        <name>messageHeader_messageType_triggerEvent</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString().slice(0, 3); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_messageType_triggerEvent&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_messageType_triggerEvent</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString().slice(0, 3)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>4</sequenceNumber>
+        <name>messageHeader_messageType</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString(); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_messageType&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_messageType</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString()</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>5</sequenceNumber>
+        <name>messageHeader_messageControlId_value</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;].toString().slice(0, 199); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_messageControlId_value&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_messageControlId_value</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;].toString().slice(0, 199)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>6</sequenceNumber>
+        <name>messageHeader_acceptAcknowledgmentType_value</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.15&apos;][&apos;MSH.15.1&apos;].toString().slice(0, 2); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_acceptAcknowledgmentType_value&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_acceptAcknowledgmentType_value</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.15&apos;][&apos;MSH.15.1&apos;].toString().slice(0, 2)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>7</sequenceNumber>
+        <name>messageHeader_applicationAcknowledgmentType_value</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.16&apos;][&apos;MSH.16.1&apos;].toString().slice(0, 2); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_applicationAcknowledgmentType_value&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_applicationAcknowledgmentType_value</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.16&apos;][&apos;MSH.16.1&apos;].toString().slice(0, 2)</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>8</sequenceNumber>
+        <name>messageHeader_sequenceNumber_value</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;MSH&apos;][&apos;MSH.13&apos;][&apos;MSH.13.1&apos;].toString(); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;messageHeader_sequenceNumber_value&apos;, validate( mapping , 0, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>messageHeader_sequenceNumber_value</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;MSH&apos;][&apos;MSH.13&apos;][&apos;MSH.13.1&apos;].toString()</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>9</sequenceNumber>
+        <name>codeSite</name>
+        <script>var codeSite= &apos;&apos;
+
+ if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos; ) {
+ 	codeSite=msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()
+ }
+
+ if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos; ) {
+ 	codeSite= msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()
+ }
+
+  channelMap.put(&apos;codeSite&apos;, codeSite);</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var codeSite= &apos;&apos;
+
+ if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos; ) {
+ 	codeSite=msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()
+ }
+
+ if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos; ) {
+ 	codeSite= msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()
+ }
+
+  channelMap.put(&apos;codeSite&apos;, codeSite);</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>10</sequenceNumber>
+        <name>patient_hl7_idenditier</name>
+        <script>/* récupère les ID patient pour chaques authorités d&apos;assigantions trouvées dans le segment PDI */
+
+//  Version sans gestion des identifiants multiples
+
+var assigningAuthorityNameSpaceId = null
+var identifierTypeCode = &apos;PI&apos;
+var hl7_patient_patient_id =  msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()
+
+if(msg[&apos;PID&apos;][&apos;PID.3&apos;].length() === 1) {
+	hl7_patient_patient_id = msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()
+}else{
+	for each (var pid in msg[&apos;PID&apos;][&apos;PID.3&apos;]) {
+		if(
+			(
+				assigningAuthorityNameSpaceId == null ||
+				pid[&apos;PID.3.4&apos;].toString() == assigningAuthorityNameSpaceId				
+			)
+			&amp;&amp;
+			(
+				identifierTypeCode == null ||
+				pid[&apos;PID.3.5&apos;].toString() == identifierTypeCode
+			)
+		) {
+			hl7_patient_patient_id= pid[&apos;PID.3.1&apos;].toString()
+			break
+		}		
+	}
+}
+
+if(hl7_patient_patient_id === null || hl7_patient_patient_id == &apos;&apos;) {
+	var message = channelName + &apos;: &apos; + &apos;No patient id found in message: &apos; + $(&apos;messageHeader_messageControlId_value&apos;)
+	logToFile(message, &apos;WARNING&apos;)
+	throw &apos;No patient id found&apos;;
+}
+if(hl7_patient_patient_id.length &gt; 30) {
+	var message = channelName + &apos;: &apos; + &apos;Patient id too long: &apos; + $(&apos;messageHeader_messageControlId_value&apos;)
+	logToFile(message)
+	throw &apos;Patient id too long&apos;;
+}
+
+channelMap.put(&apos;patient_hl7_identifier&apos;, hl7_patient_patient_id )</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>/* récupère les ID patient pour chaques authorités d&apos;assigantions trouvées dans le segment PDI */
+
+//  Version sans gestion des identifiants multiples
+
+var assigningAuthorityNameSpaceId = null
+var identifierTypeCode = &apos;PI&apos;
+var hl7_patient_patient_id =  msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()
+
+if(msg[&apos;PID&apos;][&apos;PID.3&apos;].length() === 1) {
+	hl7_patient_patient_id = msg[&apos;PID&apos;][&apos;PID.3&apos;][&apos;PID.3.1&apos;].toString()
+}else{
+	for each (var pid in msg[&apos;PID&apos;][&apos;PID.3&apos;]) {
+		if(
+			(
+				assigningAuthorityNameSpaceId == null ||
+				pid[&apos;PID.3.4&apos;].toString() == assigningAuthorityNameSpaceId				
+			)
+			&amp;&amp;
+			(
+				identifierTypeCode == null ||
+				pid[&apos;PID.3.5&apos;].toString() == identifierTypeCode
+			)
+		) {
+			hl7_patient_patient_id= pid[&apos;PID.3.1&apos;].toString()
+			break
+		}		
+	}
+}
+
+if(hl7_patient_patient_id === null || hl7_patient_patient_id == &apos;&apos;) {
+	var message = channelName + &apos;: &apos; + &apos;No patient id found in message: &apos; + $(&apos;messageHeader_messageControlId_value&apos;)
+	logToFile(message, &apos;WARNING&apos;)
+	throw &apos;No patient id found&apos;;
+}
+if(hl7_patient_patient_id.length &gt; 30) {
+	var message = channelName + &apos;: &apos; + &apos;Patient id too long: &apos; + $(&apos;messageHeader_messageControlId_value&apos;)
+	logToFile(message)
+	throw &apos;Patient id too long&apos;;
+}
+
+channelMap.put(&apos;patient_hl7_identifier&apos;, hl7_patient_patient_id )</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>11</sequenceNumber>
+        <name>patient_ identifierList</name>
+        <script>//  Version  avec gestion des identifiants multiples 
+// necessite une adaptation dans Uspert Patient et table Hlè_patient_identifier
+//PID|||271616^^^EXPERTSANTE^PI~^^^SIGEMS^PI
+
+
+var identifierList = []
+
+for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.3&apos;].length(); i++) {
+
+	// attention il paut y a voir des identifiants   SIGEMS  vides :    PID|||271616^^^EXPERTSANTE^PI~^^^SIGEMS^PI
+	// et dans certain cas pas de code PI
+
+	if (msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].length()) {  
+		// Gestion du PI-3 , dont l&apos;INS en PAM 2.10
+	    		 if ( msg[&apos;MSH&apos;][&apos;MSH.12&apos;][&apos;MSH.12.1&apos;].toString() == &quot;2.5.1&quot; || msg[&apos;MSH&apos;][&apos;MSH.12&apos;][&apos;MSH.12.1&apos;].toString() == &quot;2.5&quot;){
+	    		 	if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].length()){
+	    		 		if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;PI&apos;){
+	    		 			identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString() ||&apos;KLINCK&apos;,				    		
+				    		oid: 						msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].toString(),
+				    		universal_id_type : 			msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.3&apos;].toString(),
+				    		type_code_id:					msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString() || &apos;PI&apos; //  si vide PI
+			    			})
+	    		 		}
+	    		 		else if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIR&apos;
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIA&apos; 
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS&apos;){
+			    		 			
+	    		 				if (msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString() == &apos;VALI&apos;){// Pour traiter l&apos;INS, le PID-32 doit valoir VALI, sinon on ignore l&apos;INS
+		    		 				identifierList.push({
+							    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+							   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString() ||&apos;KLINCK&apos;,				    		
+							    		oid: 						msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].toString(),
+							    		universal_id_type : 			msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.3&apos;].toString(),
+							    		type_code_id:					msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString() || &apos;PI&apos; //  si vide PI
+						    		})
+		    		 			}
+		    		 			else {
+		    		 				// On ne fait rien
+		    		 			}
+	    		 		}
+	    		 		
+	    		 	}
+	    		 	else{
+	    		 		identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;].toString() ||&apos;KLINCK&apos;,
+				    		oid: 						&quot;&quot;,
+				    		universal_id_type : 			&quot;&quot;,
+				    		type_code_id:					&quot;PI&quot;
+				    })
+	    		 	
+	    		 	}
+	    		 }
+    		 	else{
+    		 		if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIR&apos;
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIA&apos; 
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS&apos;){
+			    		 		// On ne fait rien		
+			    		 		}
+			    	else{
+	    		 		identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString()|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;].toString() ||&apos;KLINCK&apos;,
+				    		oid: 						&quot;&quot;,
+				    		universal_id_type : 			&quot;&quot;,
+				    		type_code_id:					&quot;PI&quot;
+			   		 })
+			    	}
+    		 	}
+	    	} 	
+ 	}
+ 
+
+ channelMap.put(&apos;patient_identifierList&apos;, identifierList);</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>//  Version  avec gestion des identifiants multiples 
+// necessite une adaptation dans Uspert Patient et table Hlè_patient_identifier
+//PID|||271616^^^EXPERTSANTE^PI~^^^SIGEMS^PI
+
+
+var identifierList = []
+
+for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.3&apos;].length(); i++) {
+
+	// attention il paut y a voir des identifiants   SIGEMS  vides :    PID|||271616^^^EXPERTSANTE^PI~^^^SIGEMS^PI
+	// et dans certain cas pas de code PI
+
+	if (msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].length()) {  
+		// Gestion du PI-3 , dont l&apos;INS en PAM 2.10
+	    		 if ( msg[&apos;MSH&apos;][&apos;MSH.12&apos;][&apos;MSH.12.1&apos;].toString() == &quot;2.5.1&quot; || msg[&apos;MSH&apos;][&apos;MSH.12&apos;][&apos;MSH.12.1&apos;].toString() == &quot;2.5&quot;){
+	    		 	if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].length()){
+	    		 		if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;PI&apos;){
+	    		 			identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString() ||&apos;KLINCK&apos;,				    		
+				    		oid: 						msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].toString(),
+				    		universal_id_type : 			msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.3&apos;].toString(),
+				    		type_code_id:					msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString() || &apos;PI&apos; //  si vide PI
+			    			})
+	    		 		}
+	    		 		else if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIR&apos;
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIA&apos; 
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS&apos;){
+			    		 			
+	    		 				if (msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString() == &apos;VALI&apos;){// Pour traiter l&apos;INS, le PID-32 doit valoir VALI, sinon on ignore l&apos;INS
+		    		 				identifierList.push({
+							    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+							   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString() ||&apos;KLINCK&apos;,				    		
+							    		oid: 						msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.2&apos;].toString(),
+							    		universal_id_type : 			msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.3&apos;].toString(),
+							    		type_code_id:					msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString() || &apos;PI&apos; //  si vide PI
+						    		})
+		    		 			}
+		    		 			else {
+		    		 				// On ne fait rien
+		    		 			}
+	    		 		}
+	    		 		
+	    		 	}
+	    		 	else{
+	    		 		identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;].toString() ||&apos;KLINCK&apos;,
+				    		oid: 						&quot;&quot;,
+				    		universal_id_type : 			&quot;&quot;,
+				    		type_code_id:					&quot;PI&quot;
+				    })
+	    		 	
+	    		 	}
+	    		 }
+    		 	else{
+    		 		if(msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIR&apos;
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS-NIA&apos; 
+			    		 		|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.5&apos;].toString()==&apos;INS&apos;){
+			    		 		// On ne fait rien		
+			    		 		}
+			    	else{
+	    		 		identifierList.push({
+				    		id: 							msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.1&apos;].toString(),
+				   		assigning_authority_namespace_id:  msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;][&apos;PID.3.4.1&apos;].toString()|| msg[&apos;PID&apos;][&apos;PID.3&apos;][i][&apos;PID.3.4&apos;].toString() ||&apos;KLINCK&apos;,
+				    		oid: 						&quot;&quot;,
+				    		universal_id_type : 			&quot;&quot;,
+				    		type_code_id:					&quot;PI&quot;
+			   		 })
+			    	}
+    		 	}
+	    	} 	
+ 	}
+ 
+
+ channelMap.put(&apos;patient_identifierList&apos;, identifierList);</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>12</sequenceNumber>
+        <name>patient_last_name and first name</name>
+        <script>// prendre le  nom marital (celui présent sur la carte vitale )  Type D
+ 
+var last_name_D = &apos;&apos;
+var first_name_D = &apos;&apos;
+
+var last_name_L = &apos;&apos;
+var first_name_L = &apos;&apos;
+
+var first_nameList_L = &apos;&apos;
+var first_nameList_D = &apos;&apos;
+ 
+//  Dans toutes les occurences de noms, on fait le trie entre les nom  de type D et de ytype L 
+		//if(patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;D&apos;) {
+			last_name_D = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.1&apos;].toString().toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+			first_name_D = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)		
+		//}
+	
+
+/*for each (var patientNameId in msg[&apos;PID&apos;][&apos;PID.5&apos;][0]) {
+	
+	if(patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;D&apos;) {
+		last_name_D = patientNameId[0][&apos;PID.5.1&apos;].toString().toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_D = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)		
+       } else if (patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;L&apos;) {
+		last_name_L = patientNameId[0][&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_L = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		if (msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString() == &apos;VALI&apos;){ // prise en compte de tous les prénoms si l&apos;INS est qualifié
+			first_nameList_L = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.3&apos;].toString()
+		}
+				
+	} else {
+		last_name_D = patientNameId[0][&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_D = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+	}
+}*/
+
+	channelMap.put(&apos;patient_last_name&apos;, last_name_D )
+	channelMap.put(&apos;patient_first_name&apos;, first_name_D )</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// prendre le  nom marital (celui présent sur la carte vitale )  Type D
+ 
+var last_name_D = &apos;&apos;
+var first_name_D = &apos;&apos;
+
+var last_name_L = &apos;&apos;
+var first_name_L = &apos;&apos;
+
+var first_nameList_L = &apos;&apos;
+var first_nameList_D = &apos;&apos;
+ 
+//  Dans toutes les occurences de noms, on fait le trie entre les nom  de type D et de ytype L 
+		//if(patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;D&apos;) {
+			last_name_D = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.1&apos;].toString().toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+			first_name_D = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)		
+		//}
+	
+
+/*for each (var patientNameId in msg[&apos;PID&apos;][&apos;PID.5&apos;][0]) {
+	
+	if(patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;D&apos;) {
+		last_name_D = patientNameId[0][&apos;PID.5.1&apos;].toString().toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_D = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)		
+       } else if (patientNameId[0][&apos;PID.5.7&apos;].toString() == &apos;L&apos;) {
+		last_name_L = patientNameId[0][&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_L = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		if (msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString() == &apos;VALI&apos;){ // prise en compte de tous les prénoms si l&apos;INS est qualifié
+			first_nameList_L = msg[&apos;PID&apos;][&apos;PID.5&apos;][0][&apos;PID.5.3&apos;].toString()
+		}
+				
+	} else {
+		last_name_D = patientNameId[0][&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+		first_name_D = patientNameId[0][&apos;PID.5.2&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)
+	}
+}*/
+
+	channelMap.put(&apos;patient_last_name&apos;, last_name_D )
+	channelMap.put(&apos;patient_first_name&apos;, first_name_D )</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>13</sequenceNumber>
+        <name>patient_birthname</name>
+        <script>var birthName = &apos;&apos;
+ 
+//  Dans toutes les occurences de noms, on fait le trie entre les nom  de type D et de ytype L 
+
+for each (var patientNameId in msg[&apos;PID&apos;][&apos;PID.5&apos;]) {
+	
+	if(patientNameId[&apos;PID.5.7&apos;].toString() == &apos;L&apos;) {
+		birthName = patientNameId[&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)	
+       } 
+}
+
+channelMap.put(&apos;patient_birthname&apos;, birthName );</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var birthName = &apos;&apos;
+ 
+//  Dans toutes les occurences de noms, on fait le trie entre les nom  de type D et de ytype L 
+
+for each (var patientNameId in msg[&apos;PID&apos;][&apos;PID.5&apos;]) {
+	
+	if(patientNameId[&apos;PID.5.7&apos;].toString() == &apos;L&apos;) {
+		birthName = patientNameId[&apos;PID.5.1&apos;].toString().toUpperCase().trim().replace(/&apos;/g, &quot; &quot;)	
+       } 
+}
+
+channelMap.put(&apos;patient_birthname&apos;, birthName );</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>14</sequenceNumber>
+        <name>patient Birthdate</name>
+        <script>var birthdate;
+
+try {
+	birthdate = dateParser(msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString()).substring(0,10);
+ 
+	
+} catch (e) {
+	logger.error(e);
+	birthdate = &apos;&apos;;
+}
+
+channelMap.put(&apos;patient_birthdate&apos;, validate( birthdate , &apos;1900-01-01 00:00:00&apos;, new Array()));</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var birthdate;
+
+try {
+	birthdate = dateParser(msg[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;].toString()).substring(0,10);
+ 
+	
+} catch (e) {
+	logger.error(e);
+	birthdate = &apos;&apos;;
+}
+
+channelMap.put(&apos;patient_birthdate&apos;, validate( birthdate , &apos;1900-01-01 00:00:00&apos;, new Array()));</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>15</sequenceNumber>
+        <name>identity_reliability_code</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString(); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;identity_reliability_code&apos;, validate( mapping , &apos;&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>identity_reliability_code</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;PID&apos;][&apos;PID.32&apos;][&apos;PID.32.1&apos;].toString()</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>16</sequenceNumber>
+        <name>patient_sex</name>
+        <script>var mapping;
+
+try {
+	mapping = msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString(); 
+} catch (e) {
+	logger.error(e);
+	mapping = &apos;&apos;;
+}
+
+channelMap.put(&apos;patient_sex&apos;, validate( mapping , &apos;U&apos;, new Array()));</script>
+        <type>Mapper</type>
+        <data>
+          <entry>
+            <string>Variable</string>
+            <string>patient_sex</string>
+          </entry>
+          <entry>
+            <string>Mapping</string>
+            <string>msg[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;].toString()</string>
+          </entry>
+          <entry>
+            <string>DefaultValue</string>
+            <string>&apos;U&apos;</string>
+          </entry>
+          <entry>
+            <string>RegularExpressions</string>
+            <list/>
+          </entry>
+          <entry>
+            <string>isGlobal</string>
+            <string>channel</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>17</sequenceNumber>
+        <name>patient_street_address</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+
+var street_address = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	street_address = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()  
+}else{
+	street_address = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex][&apos;PID.11.1&apos;].toString() 	
+}
+
+street_address = street_address.replace(/&apos;/g, &quot; &quot;);
+
+channelMap.put(&apos;patient_street_address&apos;,  street_address)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+
+var street_address = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	street_address = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;].toString()  
+}else{
+	street_address = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex][&apos;PID.11.1&apos;].toString() 	
+}
+
+street_address = street_address.replace(/&apos;/g, &quot; &quot;);
+
+channelMap.put(&apos;patient_street_address&apos;,  street_address)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>18</sequenceNumber>
+        <name>patient_city</name>
+        <script>// permet de parser des occurences
+// l&apos;index commence à 0
+var posIndex = 0
+var city = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	city = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}else{
+	city = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex ][&apos;PID.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}
+
+channelMap.put(&apos;patient_city&apos;,  city)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// permet de parser des occurences
+// l&apos;index commence à 0
+var posIndex = 0
+var city = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	city = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}else{
+	city = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex ][&apos;PID.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}
+
+channelMap.put(&apos;patient_city&apos;,  city)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>19</sequenceNumber>
+        <name>patient_state</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+var state = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	state = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.6&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}else{
+	state = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex][&apos;PID.11.6&apos;].toString().replace(/&apos;/g, &quot; &quot;)	
+}
+
+channelMap.put(&apos;patient_state&apos;,  state)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+var state = null
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	state = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.6&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+}else{
+	state = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex][&apos;PID.11.6&apos;].toString().replace(/&apos;/g, &quot; &quot;)	
+}
+
+channelMap.put(&apos;patient_state&apos;,  state)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>20</sequenceNumber>
+        <name>patient_zip_code</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+
+var zip_code = null
+
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	zip_code = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString()
+}else{
+	zip_code = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex ][&apos;PID.11.5&apos;].toString()	
+}
+
+channelMap.put(&apos;patient_zip_code&apos;,  zip_code)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var posIndex = 0
+
+var zip_code = null
+
+if(msg[&apos;PID&apos;][&apos;PID.11&apos;].length() === 1) {
+	zip_code = msg[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;].toString()
+}else{
+	zip_code = msg[&apos;PID&apos;][&apos;PID.11&apos;][posIndex ][&apos;PID.11.5&apos;].toString()	
+}
+
+channelMap.put(&apos;patient_zip_code&apos;,  zip_code)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>21</sequenceNumber>
+        <name>patient_private_phone_number</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var phoneNumberIndex = 0
+var privatePhoneNumber = null
+
+
+
+
+
+if(msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;){
+               for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.13&apos;].length(); i++) {
+                              if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;CP&apos;){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                           privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                            privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              } else if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;PH&apos; &amp;&amp; privatePhoneNumber == null){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                                 privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                        privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              } else if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;&apos; &amp;&amp; privatePhoneNumber == null){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                                 privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                        privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              }
+               }
+} else {
+               if(msg[&apos;PID&apos;][&apos;PID.13&apos;].length() === 1) {
+                      if (msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                   privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString().substring(0,16)
+                     } else {
+                         privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString()
+                              }  
+               }else {
+                     if (msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                   privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString().substring(0,16)
+                     } else {
+                         privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString()
+                              }
+               }
+}
+
+ 
+
+
+channelMap.put(&apos;patient_private_phone_number&apos;,  privatePhoneNumber)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var phoneNumberIndex = 0
+var privatePhoneNumber = null
+
+
+
+
+
+if(msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;){
+               for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.13&apos;].length(); i++) {
+                              if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;CP&apos;){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                           privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                            privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              } else if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;PH&apos; &amp;&amp; privatePhoneNumber == null){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                                 privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                        privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              } else if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;].toString() == &apos;&apos; &amp;&amp; privatePhoneNumber == null){
+                                    if (msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                                 privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString().substring(0,16)
+                                    } else {
+                                        privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.1&apos;].toString()
+                                            }
+                              }
+               }
+} else {
+               if(msg[&apos;PID&apos;][&apos;PID.13&apos;].length() === 1) {
+                      if (msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                   privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString().substring(0,16)
+                     } else {
+                         privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;].toString()
+                              }  
+               }else {
+                     if (msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString().length &gt; 16 ) {
+                                   privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString().substring(0,16)
+                     } else {
+                         privatePhoneNumber = msg[&apos;PID&apos;][&apos;PID.13&apos;][phoneNumberIndex][&apos;PID.13.1&apos;].toString()
+                              }
+               }
+}
+
+ 
+
+
+channelMap.put(&apos;patient_private_phone_number&apos;,  privatePhoneNumber)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>22</sequenceNumber>
+        <name>patient_business_phone_number</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var phoneNumberIndex = 0
+var business_phone_number = null
+
+
+if(msg[&apos;PID&apos;][&apos;PID.14&apos;].length() === 1) {
+	
+      if (msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString().length &gt; 16 ) {
+	     business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString().substring(0,16)
+      } else {
+          business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString()
+	 }   
+}else {
+
+      if (msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString().length &gt; 16 ) {
+	     business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString().substring(0,16)
+      } else {
+          business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString()
+      } 
+}      
+
+
+
+
+channelMap.put(&apos;patient_business_phone_number&apos;, business_phone_number)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+var phoneNumberIndex = 0
+var business_phone_number = null
+
+
+if(msg[&apos;PID&apos;][&apos;PID.14&apos;].length() === 1) {
+	
+      if (msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString().length &gt; 16 ) {
+	     business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString().substring(0,16)
+      } else {
+          business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;].toString()
+	 }   
+}else {
+
+      if (msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString().length &gt; 16 ) {
+	     business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString().substring(0,16)
+      } else {
+          business_phone_number = msg[&apos;PID&apos;][&apos;PID.14&apos;][phoneNumberIndex][&apos;PID.14.1&apos;].toString()
+      } 
+}      
+
+
+
+
+channelMap.put(&apos;patient_business_phone_number&apos;, business_phone_number)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>23</sequenceNumber>
+        <name>patient_mail</name>
+        <script>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+
+var patient_mail = null
+
+try {
+
+	if (msg[&apos;PID&apos;][&apos;PID.13&apos;].toString().length  &gt; 0)  {
+		
+		if(msg[&apos;PID&apos;][&apos;PID.13&apos;].length() === 1) {
+			
+		      if (msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.3&apos;].toString() == &apos;Internet&apos; ) {
+			     patient_mail = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.4&apos;].toString()
+		      }
+	
+		}else {
+			for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.13&apos;].length(); i++) {
+				if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;] == &apos;Internet&apos;){
+				     patient_mail = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.4&apos;].toString()
+				}
+			}
+		}
+	}
+
+
+
+} catch (e) {
+	logger.error(e);
+	patient_mail = &apos;&apos;;
+}
+
+
+channelMap.put(&apos;patient_mail&apos;, validate( patient_mail , &apos;&apos;, new Array()));</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// variable à modifier pour parser un numéro de téléphone différent
+// l&apos;index commence à 0
+
+var patient_mail = null
+
+try {
+
+	if (msg[&apos;PID&apos;][&apos;PID.13&apos;].toString().length  &gt; 0)  {
+		
+		if(msg[&apos;PID&apos;][&apos;PID.13&apos;].length() === 1) {
+			
+		      if (msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.3&apos;].toString() == &apos;Internet&apos; ) {
+			     patient_mail = msg[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.4&apos;].toString()
+		      }
+	
+		}else {
+			for (var i = 0; i &lt; msg[&apos;PID&apos;][&apos;PID.13&apos;].length(); i++) {
+				if(msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.3&apos;] == &apos;Internet&apos;){
+				     patient_mail = msg[&apos;PID&apos;][&apos;PID.13&apos;][i][&apos;PID.13.4&apos;].toString()
+				}
+			}
+		}
+	}
+
+
+
+} catch (e) {
+	logger.error(e);
+	patient_mail = &apos;&apos;;
+}
+
+
+channelMap.put(&apos;patient_mail&apos;, validate( patient_mail , &apos;&apos;, new Array()));</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>24</sequenceNumber>
+        <name>MERGE_PATIENT</name>
+        <script>var mapping_merge = null
+
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ADT&apos; &amp;&amp; msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString()==&apos;A40&apos; ){
+		
+		mapping_merge = {
+			&quot;PatientIdentifierList_id&quot; :    		msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString().slice(0, 15),
+			&quot;assigning_authority_namespace_id&quot;:    msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.4&apos;].toString(),
+			&quot;type_code_id&quot; :	&apos;PI&apos; // certains messages ne possedent pas cet info  	 			msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.5&apos;].toString()
+ 		}
+}
+
+channelMap.put(&apos;mergePatientIdentifier&apos;,  mapping_merge)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var mapping_merge = null
+
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ADT&apos; &amp;&amp; msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString()==&apos;A40&apos; ){
+		
+		mapping_merge = {
+			&quot;PatientIdentifierList_id&quot; :    		msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.1&apos;].toString().slice(0, 15),
+			&quot;assigning_authority_namespace_id&quot;:    msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.4&apos;].toString(),
+			&quot;type_code_id&quot; :	&apos;PI&apos; // certains messages ne possedent pas cet info  	 			msg[&apos;MRG&apos;][&apos;MRG.1&apos;][&apos;MRG.1.5&apos;].toString()
+ 		}
+}
+
+channelMap.put(&apos;mergePatientIdentifier&apos;,  mapping_merge)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>25</sequenceNumber>
+        <name>REFERRING_DOCTOR  - ROL ODRP</name>
+        <script>//  le segment ROL n&apos;est pas toujours présent dans tous les messages
+// on ne récupère que le médecin traitant pas les autres roles s&apos;il y en a plusieurs
+//&apos;ODRP&apos;  action code  :  medecin traitant
+
+var rol = &quot;&quot;
+
+  /* segment ROL inexistant dans message eDL a faire évoluer  avec EDL */
+
+if (msg[&apos;ROL&apos;].toString().length &gt; 0 &amp;&amp; msg[&apos;ROL&apos;][&apos;ROL.3&apos;][&apos;ROL.3.1&apos;].toString() == &apos;ODRP&apos;) {
+	
+	rol = {
+		&quot;last_name&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.3&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;rpps_number&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.4&apos;].toString(),
+		&quot;street&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.1&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;city&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;zip_code&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.5&apos;].toString(),
+		&quot;phone_number&quot;: msg[&apos;ROL&apos;][&apos;ROL.12&apos;][&apos;ROL.12.1&apos;].toString()
+	}
+	
+}
+
+
+channelMap.put(&apos;referring_doctor&apos;, rol )</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>//  le segment ROL n&apos;est pas toujours présent dans tous les messages
+// on ne récupère que le médecin traitant pas les autres roles s&apos;il y en a plusieurs
+//&apos;ODRP&apos;  action code  :  medecin traitant
+
+var rol = &quot;&quot;
+
+  /* segment ROL inexistant dans message eDL a faire évoluer  avec EDL */
+
+if (msg[&apos;ROL&apos;].toString().length &gt; 0 &amp;&amp; msg[&apos;ROL&apos;][&apos;ROL.3&apos;][&apos;ROL.3.1&apos;].toString() == &apos;ODRP&apos;) {
+	
+	rol = {
+		&quot;last_name&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.3&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;rpps_number&quot;: msg[&apos;ROL&apos;][&apos;ROL.4&apos;][0][&apos;ROL.4.4&apos;].toString(),
+		&quot;street&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.1&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;city&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.3&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;zip_code&quot;: msg[&apos;ROL&apos;][&apos;ROL.11&apos;][&apos;ROL.11.5&apos;].toString(),
+		&quot;phone_number&quot;: msg[&apos;ROL&apos;][&apos;ROL.12&apos;][&apos;ROL.12.1&apos;].toString()
+	}
+	
+}
+
+
+channelMap.put(&apos;referring_doctor&apos;, rol )</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>26</sequenceNumber>
+        <name>VISIT</name>
+        <script>var mapping_visit = null
+
+if (msg[&apos;PV1&apos;].toString().length &gt; 0) {
+
+	mapping_visit = {
+	   
+	        &quot;patient_class&quot;:  	 	msg[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;].toString()|| &quot;I&quot;,
+	        &quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString(),
+	        &quot;admission_type&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.4&apos;][&apos;PV1.4.1&apos;].toString()|| null ,
+	        &quot;preadmit_number&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.5&apos;][&apos;PV1.5.1&apos;].toString()|| null ,
+	        &quot;admit_number&quot;: 			msg[&apos;PV1&apos;][&apos;PV1.19&apos;][&apos;PV1.19.1&apos;].toString()|| null,
+	        //&quot;visit_description&quot;: &quot; &quot;,
+	        
+	        &quot;attending_doctor_external_id&quot;: 		 msg[&apos;PV1&apos;][&apos;PV1.7&apos;][&apos;PV1.7.1&apos;].toString()|| null,
+	        &quot;referring_doctor_external_id&quot;:  		 msg[&apos;PV1&apos;][&apos;PV1.8&apos;][&apos;PV1.8.1&apos;].toString()|| null,
+	        &quot;consulting_doctor_external_id&quot;:  		 msg[&apos;PV1&apos;][&apos;PV1.9&apos;][&apos;PV1.9.1&apos;].toString()|| null,
+	        &quot;admitting_doctor_external_id&quot;: 		 msg[&apos;PV1&apos;][&apos;PV1.17&apos;][&apos;PV1.17.1&apos;].toString()|| null,
+	        
+	        &quot;hospital_service&quot;:  		msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()|| null,
+	        &quot;admit_source&quot;:		     msg[&apos;PV1&apos;][&apos;PV1.14&apos;][&apos;PV1.14.1&apos;].toString()|| null,
+	        
+	        &quot;ambulatory_status&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.15&apos;][&apos;PV1.15.1&apos;].toString()|| null,
+	        &quot;medical_care_protocol_code&quot;: null,
+	        &quot;medical_care_protocol_description&quot;: null,
+	        
+	        &quot;vip_indicator&quot;:     		msg[&apos;PV1&apos;][&apos;PV1.16&apos;][&apos;PV1.16.1&apos;].toString()|| null,
+	        
+	        &quot;expected_admit_datetime&quot;:		 	dateParser(msg[&apos;PV1&apos;][&apos;PV1.44&apos;][&apos;PV1.44.1&apos;].toString())|| null,
+	        &quot;admit_datetime&quot;: 				dateParser(msg[&apos;PV1&apos;][&apos;PV1.44&apos;][&apos;PV1.44.1&apos;].toString())|| null,
+	        &quot;expected_discharge_datetime&quot;:		dateParser(msg[&apos;PV1&apos;][&apos;PV1.45&apos;][&apos;PV1.45.1&apos;].toString())|| null,
+	        &quot;discharge_datetime&quot;: 			dateParser(msg[&apos;PV1&apos;][&apos;PV1.45&apos;][&apos;PV1.45.1&apos;].toString())|| null
+	    }
+}
+
+
+
+
+if (msg[&apos;MSH&apos;][0][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos;)  {
+
+		mapping_visit = {
+			&quot;admit_number&quot; : msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString(),
+			&quot;expected_admit_datetime&quot; :  dateParser(msg[&apos;SCH&apos;][&apos;SCH.11&apos;][&apos;SCH.11.4&apos;].toString()),
+			&quot;patient_class&quot;:  	 	msg[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;].toString()|| &quot;I&quot;,
+			&quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString()
+			
+ 		}
+
+	
+}else{
+	if (msg[&apos;MSH&apos;][0][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;) {
+
+
+		mapping_visit = {
+			&quot;admit_number&quot; :  msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+			&quot;expected_admit_datetime&quot; :  dateParser(msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.4&apos;].toString()),
+			&quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString()
+ 		}
+		 
+   
+ 	}
+ }
+
+channelMap.put(&apos;visit&apos;, mapping_visit )</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var mapping_visit = null
+
+if (msg[&apos;PV1&apos;].toString().length &gt; 0) {
+
+	mapping_visit = {
+	   
+	        &quot;patient_class&quot;:  	 	msg[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;].toString()|| &quot;I&quot;,
+	        &quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString(),
+	        &quot;admission_type&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.4&apos;][&apos;PV1.4.1&apos;].toString()|| null ,
+	        &quot;preadmit_number&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.5&apos;][&apos;PV1.5.1&apos;].toString()|| null ,
+	        &quot;admit_number&quot;: 			msg[&apos;PV1&apos;][&apos;PV1.19&apos;][&apos;PV1.19.1&apos;].toString()|| null,
+	        //&quot;visit_description&quot;: &quot; &quot;,
+	        
+	        &quot;attending_doctor_external_id&quot;: 		 msg[&apos;PV1&apos;][&apos;PV1.7&apos;][&apos;PV1.7.1&apos;].toString()|| null,
+	        &quot;referring_doctor_external_id&quot;:  		 msg[&apos;PV1&apos;][&apos;PV1.8&apos;][&apos;PV1.8.1&apos;].toString()|| null,
+	        &quot;consulting_doctor_external_id&quot;:  		 msg[&apos;PV1&apos;][&apos;PV1.9&apos;][&apos;PV1.9.1&apos;].toString()|| null,
+	        &quot;admitting_doctor_external_id&quot;: 		 msg[&apos;PV1&apos;][&apos;PV1.17&apos;][&apos;PV1.17.1&apos;].toString()|| null,
+	        
+	        &quot;hospital_service&quot;:  		msg[&apos;PV1&apos;][&apos;PV1.10&apos;][&apos;PV1.10.1&apos;].toString()|| null,
+	        &quot;admit_source&quot;:		     msg[&apos;PV1&apos;][&apos;PV1.14&apos;][&apos;PV1.14.1&apos;].toString()|| null,
+	        
+	        &quot;ambulatory_status&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.15&apos;][&apos;PV1.15.1&apos;].toString()|| null,
+	        &quot;medical_care_protocol_code&quot;: null,
+	        &quot;medical_care_protocol_description&quot;: null,
+	        
+	        &quot;vip_indicator&quot;:     		msg[&apos;PV1&apos;][&apos;PV1.16&apos;][&apos;PV1.16.1&apos;].toString()|| null,
+	        
+	        &quot;expected_admit_datetime&quot;:		 	dateParser(msg[&apos;PV1&apos;][&apos;PV1.44&apos;][&apos;PV1.44.1&apos;].toString())|| null,
+	        &quot;admit_datetime&quot;: 				dateParser(msg[&apos;PV1&apos;][&apos;PV1.44&apos;][&apos;PV1.44.1&apos;].toString())|| null,
+	        &quot;expected_discharge_datetime&quot;:		dateParser(msg[&apos;PV1&apos;][&apos;PV1.45&apos;][&apos;PV1.45.1&apos;].toString())|| null,
+	        &quot;discharge_datetime&quot;: 			dateParser(msg[&apos;PV1&apos;][&apos;PV1.45&apos;][&apos;PV1.45.1&apos;].toString())|| null
+	    }
+}
+
+
+
+
+if (msg[&apos;MSH&apos;][0][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos;)  {
+
+		mapping_visit = {
+			&quot;admit_number&quot; : msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString(),
+			&quot;expected_admit_datetime&quot; :  dateParser(msg[&apos;SCH&apos;][&apos;SCH.11&apos;][&apos;SCH.11.4&apos;].toString()),
+			&quot;patient_class&quot;:  	 	msg[&apos;PV1&apos;][&apos;PV1.2&apos;][&apos;PV1.2.1&apos;].toString()|| &quot;I&quot;,
+			&quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString()
+			
+ 		}
+
+	
+}else{
+	if (msg[&apos;MSH&apos;][0][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;) {
+
+
+		mapping_visit = {
+			&quot;admit_number&quot; :  msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+			&quot;expected_admit_datetime&quot; :  dateParser(msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.4&apos;].toString()),
+			&quot;visit_description&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.3&apos;][&apos;PV1.3.1&apos;].toString()
+ 		}
+		 
+   
+ 	}
+ }
+
+channelMap.put(&apos;visit&apos;, mapping_visit )</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>27</sequenceNumber>
+        <name>INSURANCES</name>
+        <script>// Segment IN1; IN2; GT1 : Couverture sociale 
+
+
+/* 
+Bonjour,
+ 
+Concernant le segment ROL, il doit être transmis immédiatement après le segment PID.
+ 
+Pour le médecin traitant, seules 3 informations nous intéressent :
+                ROL-3 = « ODRP »
+                ROL-4.1 = code du médecin
+                ROL-4.13 = Type du code médecin (ADELI ou RPPS). Tout autre valeur sera considérée comme étant notre numéro interne
+ 
+Concernant les segments assurance, seul le segment IN1 sera traité. Les champs suivants seront utilisés :
+ 
+                IN1-2.1 = Type d’assurance (AMO/AME ou CMU si caisse de SS, AMC/AMEC ou CMUC si mutuelle)
+                IN1-3.1 = Code caisse Xplore (régime + caisse + centre)
+                IN1-12 = date début des droits
+                IN1-13 = date fin des droits
+                IN1-15 = type d’exonération
+                IN1-16 = identité de l’assuré
+                IN1-17 = bénéficiaire
+                IN1-31 = nature d’assurance
+                IN1-36 = n° accident du travail si IN1-31 = 41
+                IN1-49 = n° de sécurité sociale ou de mutuelle de l’assuré
+ 
+
+*/ 
+
+
+
+
+
+
+ 
+var posIndex = 0
+var mapping_insurances = null
+
+if (msg[&apos;IN1&apos;])  {
+	// type de débiteur  AMO : Assurance Maladie Obligatoire 
+	// -------------------------------------------------
+	 if ( msg[&apos;IN1&apos;][&apos;IN1.2&apos;][&apos;IN1.2.1&apos;].toString() == &apos;AMO&apos;){
+	 
+		mapping_insurances = {
+			&quot;insurance_type&quot;:  msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.2.1&apos;].toString(),
+			&quot;nir&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.49&apos;].toString().substring(0,16),
+			&quot;amo_code_regime_caisse_centre&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.3&apos;].toString(),
+			&quot;amo_droit_debut&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.12&apos;].toString(),
+			&quot;amo_droit_fin&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.13&apos;].toString()
+ 		}
+ 		
+ 	}else{
+ 	
+ 	/* mapping spécial EDL */
+
+		mapping_insurances = {
+			&quot;insurance_type&quot;:  &apos;AMO&apos;,
+			&quot;nir&quot; : msg[&apos;PID&apos;][&apos;PID.19&apos;][&apos;PID.19.1&apos;].toString().substring(0,16),
+			&quot;amo_code_regime_caisse_centre&quot; : null ,
+			&quot;amo_droit_debut&quot;: null,
+			&quot;amo_droit_fin&quot; :  null
+		}
+	}
+ 	
+
+}
+
+
+
+channelMap.put(&apos;insurances&apos;, mapping_insurances);
+
+
+/* 
+
+
+codeRegime	insurance_company_id_number 	IN1-3-1 
+codeCaisse	insurance_company_id_number	IN1-3-1 
+mutuelleDeb	VPériode de couverture	IN1-12
+mutuelleFin	Voir plus bas Période de couverture	IN1-13
+numMutuelle	insurance_company_id_number	IN1-3
+centreGestionnaire	insurance_company_id_number	IN1-3-1 
+NIR 
+(numéro sécu)+clé	insureds_ID_number_ID_number	IN1-49 
+
+Code gestion lu sur
+l’attestation ou rendu
+par l’API de lecture
+carte vitale	insureds_company_plan_code	IN1-35
+Certaines informations sont tranversales en fonction de la qualité du patient.
+Par exemple le nom (seg IN1-16-1) sera celui de l’assuré ou du bénéficiaire en fonction de ce qu’on trouvera dans le champ ‘Qualité du bénéficiaire’ c’est à dire si le bénéficiaire des soins est l’assuré ou pas.
+Bénéficiaire
+Rang gémellaire	care_receiver_twin_rank	PID-25
+Qualité du
+bénéficiaire	care_receiver_quality_code	IN1-17
+Nom	care_receiver_family_name	IN1-16-1
+Prénom	care_receiver_given_name	IN1-16-2
+Date de naissance	care_receiver_date of_birth	IN1-18
+Numéro_INSC	care_receiver_INSC	PID-3
+Période de couverture
+Début	insureds_plan_effective_date	IN1-12
+Fin	insureds_plan_expiration_date	IN1-13
+
+*/</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// Segment IN1; IN2; GT1 : Couverture sociale 
+
+
+/* 
+Bonjour,
+ 
+Concernant le segment ROL, il doit être transmis immédiatement après le segment PID.
+ 
+Pour le médecin traitant, seules 3 informations nous intéressent :
+                ROL-3 = « ODRP »
+                ROL-4.1 = code du médecin
+                ROL-4.13 = Type du code médecin (ADELI ou RPPS). Tout autre valeur sera considérée comme étant notre numéro interne
+ 
+Concernant les segments assurance, seul le segment IN1 sera traité. Les champs suivants seront utilisés :
+ 
+                IN1-2.1 = Type d’assurance (AMO/AME ou CMU si caisse de SS, AMC/AMEC ou CMUC si mutuelle)
+                IN1-3.1 = Code caisse Xplore (régime + caisse + centre)
+                IN1-12 = date début des droits
+                IN1-13 = date fin des droits
+                IN1-15 = type d’exonération
+                IN1-16 = identité de l’assuré
+                IN1-17 = bénéficiaire
+                IN1-31 = nature d’assurance
+                IN1-36 = n° accident du travail si IN1-31 = 41
+                IN1-49 = n° de sécurité sociale ou de mutuelle de l’assuré
+ 
+
+*/ 
+
+
+
+
+
+
+ 
+var posIndex = 0
+var mapping_insurances = null
+
+if (msg[&apos;IN1&apos;])  {
+	// type de débiteur  AMO : Assurance Maladie Obligatoire 
+	// -------------------------------------------------
+	 if ( msg[&apos;IN1&apos;][&apos;IN1.2&apos;][&apos;IN1.2.1&apos;].toString() == &apos;AMO&apos;){
+	 
+		mapping_insurances = {
+			&quot;insurance_type&quot;:  msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.2.1&apos;].toString(),
+			&quot;nir&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.49&apos;].toString().substring(0,16),
+			&quot;amo_code_regime_caisse_centre&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.3&apos;].toString(),
+			&quot;amo_droit_debut&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.12&apos;].toString(),
+			&quot;amo_droit_fin&quot; : msg[&apos;IN&apos;][&apos;IN1&apos;][&apos;IN1.13&apos;].toString()
+ 		}
+ 		
+ 	}else{
+ 	
+ 	/* mapping spécial EDL */
+
+		mapping_insurances = {
+			&quot;insurance_type&quot;:  &apos;AMO&apos;,
+			&quot;nir&quot; : msg[&apos;PID&apos;][&apos;PID.19&apos;][&apos;PID.19.1&apos;].toString().substring(0,16),
+			&quot;amo_code_regime_caisse_centre&quot; : null ,
+			&quot;amo_droit_debut&quot;: null,
+			&quot;amo_droit_fin&quot; :  null
+		}
+	}
+ 	
+
+}
+
+
+
+channelMap.put(&apos;insurances&apos;, mapping_insurances);
+
+
+/* 
+
+
+codeRegime	insurance_company_id_number 	IN1-3-1 
+codeCaisse	insurance_company_id_number	IN1-3-1 
+mutuelleDeb	VPériode de couverture	IN1-12
+mutuelleFin	Voir plus bas Période de couverture	IN1-13
+numMutuelle	insurance_company_id_number	IN1-3
+centreGestionnaire	insurance_company_id_number	IN1-3-1 
+NIR 
+(numéro sécu)+clé	insureds_ID_number_ID_number	IN1-49 
+
+Code gestion lu sur
+l’attestation ou rendu
+par l’API de lecture
+carte vitale	insureds_company_plan_code	IN1-35
+Certaines informations sont tranversales en fonction de la qualité du patient.
+Par exemple le nom (seg IN1-16-1) sera celui de l’assuré ou du bénéficiaire en fonction de ce qu’on trouvera dans le champ ‘Qualité du bénéficiaire’ c’est à dire si le bénéficiaire des soins est l’assuré ou pas.
+Bénéficiaire
+Rang gémellaire	care_receiver_twin_rank	PID-25
+Qualité du
+bénéficiaire	care_receiver_quality_code	IN1-17
+Nom	care_receiver_family_name	IN1-16-1
+Prénom	care_receiver_given_name	IN1-16-2
+Date de naissance	care_receiver_date of_birth	IN1-18
+Numéro_INSC	care_receiver_INSC	PID-3
+Période de couverture
+Début	insureds_plan_effective_date	IN1-12
+Fin	insureds_plan_expiration_date	IN1-13
+
+*/</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>28</sequenceNumber>
+        <name>STUDIES</name>
+        <script>// dans le même messages pour certains éditeurs, il peut y avoir plusieurs examens les examens sont donc stocké dans un tableau 
+// on mappe donc un tableau d&apos;e&apos;examens 
+
+var studies = []
+var study_status_code
+
+
+// medecin precripteur
+var prescribing_doctor = {}
+
+/* PV1||O||||||A10020237120^VINCENT^JEAN PHILIPPE||TEN|||||||||
+
+PV1,8,1 : code RPPS ou N° ADELI ?
+
+PV1,8,2 : Nom de famille
+
+PV1,8,3: prenom
+ */
+
+
+if (msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0].toString().length &gt; 0  ) {
+	
+	prescribing_doctor = {
+		// a vérifier  est ce l&apos;ID d&apos;EDL ou le code RPPS en 1.8.1 ? A10102833092^RENAULD^FRANCOIS
+		&quot;rpps_number&quot;:	     msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.1&apos;].toString(),
+		&quot;last_name&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+	}
+	
+}
+
+
+channelMap.put(&apos;prescribing_doctor&apos;, prescribing_doctor )
+
+
+var physician_doctor = {}
+
+
+ 
+
+
+// -------------------  ADT :  Identité et Mouvemùents Patient -------------------
+//  pas d&apos;informations sur les rendez-vous et examen dans un message patient 
+		
+ 
+
+// -------------------  SIU : Appointments -------------------
+// il peut y avoir plusieurs codes examens dans le même rendez-vous 
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos;)  {
+
+
+		if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S15&apos;  || 
+			    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S17&apos;  || 
+			    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S26&apos;  )   {
+					study_status_code = &apos;CANCELED&apos;
+				}else{
+					study_status_code = &apos;SCHEDULED&apos;
+			}
+	// ------------------ AIP : Médecin radiologue qui fait l&apos;examen ---------------------
+
+
+if (msg[&apos;AIP&apos;][&apos;AIP.1&apos;].toString().length &gt; 0  ) {
+	
+	physician_doctor = {
+		&quot;rpps_number&quot;:	     msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.1&apos;].toString(),
+		&quot;last_name&quot;: 		msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: 		msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+	}
+	
+}
+
+
+
+
+
+	for (var i = 0; i &lt; msg[&apos;AIS&apos;][&apos;AIS.3&apos;].length(); i++) {
+
+		studies.push({
+			appointment_number:   (msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString()  || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString()) +&quot;_&quot;+i , 
+			accession_number:     msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString()  || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString(), // pour les RDV internet qui change d&apos;ID dans EDL
+			// on fabrique un faux SUID pour que le dernier examens de l&apos;occurence
+			// ne réécrase par les précédent car il s ont tous le même access_number
+			instance_uid:  	 (msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString() ) +&quot;_&quot;+i ,
+			
+			
+			location_code:       msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.2&apos;].toString(),
+			location_label: 	 msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.9&apos;].toString(),
+			location_type_code: &apos;NOT_USED&apos;,
+			location_ticket_message: null,
+			location_paper_message: null,
+			
+			study_status_code:  		study_status_code,
+			//action_code : msg[&apos;AIS&apos;][&apos;AIS.2&apos;][i][&apos;AIS.2.1&apos;].toString()
+
+			//Pourquoi préfixé le study_type_code avec le facility ?
+			// Il faut préfixé par le code lieux
+			//study_type_code: 	msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()+ &apos;_&apos; +msg[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;].toString(),
+			
+			// à CCN93 les code examen contiennt des / u des carateres spéciaux
+                
+			study_type_code: 	msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.2&apos;].toString() + &apos;_&apos; + msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.1&apos;].toString(),
+			//study_type_code: 	&apos; &apos;,
+			
+			shift_code: 		msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.1&apos;].toString(),
+
+			borneStudyLabel:	msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.2&apos;].toString(),
+			managerStudyLabel: 	msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.2&apos;].toString(),
+			alternativeCode: 	null,
+			recommendation: 	null,
+			studyGroupCode: 	null,			
+
+			scheduled_datetime:  dateParser( msg[&apos;AIS&apos;][&apos;AIS.4&apos;][i][&apos;AIS.4.1&apos;].toString()),
+			
+			modality_code: 	 msg[&apos;AIL&apos;][&apos;AIL.4&apos;][&apos;AIL.4.1&apos;].toString(),
+			modality_text: 	 msg[&apos;AIL&apos;][&apos;AIL.4&apos;][&apos;AIL.4.2&apos;].toString(),
+			
+			origin: 			msg[&apos;SCH&apos;][&apos;SCH.19&apos;][&apos;SCH.19.4&apos;][&apos;SCH.19.4.1&apos;].toString(),
+			duration: 		msg[&apos;AIS&apos;][&apos;AIS.7&apos;][&apos;AIS.7.1&apos;].toString(), 
+			prescribing_doctor:  prescribing_doctor,
+			physician_doctor : physician_doctor
+		})
+  	
+	}
+
+}
+	
+// -------------------  ORM : Studies-------------------	
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;) {
+		
+		if ( msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() ==&apos;CA&apos; ) {
+			study_status_code = &apos;CANCELED&apos;
+		   }
+		   else {
+			study_status_code = &apos;WAITING&apos;
+		   	
+		   }
+	
+	
+		for (var i = 0; i &lt; msg[&apos;OBR&apos;][&apos;OBR.4&apos;].length(); i++) {
+		
+					 studies.push({
+					 	appointment_number:      msg[&apos;ORC&apos;][&apos;ORC.3&apos;][&apos;ORC.3.1&apos;].toString() || msg[&apos;ORC&apos;][&apos;ORC.2&apos;][&apos;ORC.2.1&apos;].toString()  ,
+						accession_number:     	msg[&apos;ORC&apos;][&apos;ORC.3&apos;][&apos;ORC.3.1&apos;].toString() || msg[&apos;ORC&apos;][&apos;ORC.2&apos;][&apos;ORC.2.1&apos;].toString()  ,
+						instance_uid:  		msg[&apos;ZDS&apos;][&apos;ZDS.1&apos;][&apos;ZDS.1.1&apos;].toString() ,
+		
+						// c&apos;est la date réelle de démarrage de l&apos;examen qui est mise à jour à réception dde l&apos;ORM après accueil du RIS
+						scheduled_datetime:  	dateParser(msg[&apos;ORC&apos;][&apos;ORC.7&apos;][&apos;ORC.7.4&apos;].toString()) || dateParser(msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString()),
+						location_code:       	msg[&apos;ORC&apos;][&apos;ORC.17&apos;][&apos;ORC.17.1&apos;].toString(),
+						location_label: 		msg[&apos;ORC&apos;][&apos;ORC.17&apos;][&apos;ORC.17.2&apos;].toString(),
+						location_type_code: &apos;NOT_USED&apos;,
+						location_ticket_message: null,
+						location_paper_message: null,
+						
+						study_status_code: 			study_status_code,
+						/* CCM  concaténation CCB + code */
+						//Pourquoi préfixé le study_type_code avec le facility ?
+						// Il faut préfixé par le code lieux
+						//study_type_code: 		    msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()+ &apos;_&apos; +msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						study_type_code: 		    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() + &apos;_&apos; + msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						shift_code: 			    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() ,
+ 
+						borneStudyLabel:	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						managerStudyLabel: 	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						alternativeCode: 	null,
+						recommendation: 	null,
+						studyGroupCode: 	null,							
+						
+						modality_code: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString(),
+						modality_text: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.2&apos;].toString(),
+						origin: 				null,
+						duration: 			msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.3&apos;].toString(),
+						prescribing_doctor:     prescribing_doctor ,
+						physician_doctor : physician_doctor
+					 })
+	  	}
+}
+
+// ---- compte rendu  ------------//
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORU&apos;) {
+	
+		 /* compte rendu : si l&apos;examen est créé on le met a terminé */
+		 
+		for (var i = 0; i &lt; msg[&apos;OBR&apos;][&apos;OBR.4&apos;].length(); i++) {
+		
+					 studies.push({
+					 	appointment_number:      msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+						accession_number:     	msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+						instance_uid:            msg[&apos;ZDS&apos;][&apos;ZDS.1&apos;][&apos;ZDS.1.1&apos;].toString()||msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() +&quot;_&quot;+i ,
+		
+						// c&apos;est la date réelle de démarrage de l&apos;examen qui est mise à jour à réception dde l&apos;ORM après accueil du RIS
+						scheduled_datetime:  	dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString()),
+						location_code:       	msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString()||null ,
+						location_label: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString()||null,
+						location_type_code: &apos;NOT_USED&apos;,
+						location_ticket_message: null,
+						location_paper_message: null,
+						
+						study_status_code: 			&quot;DONE&quot;,
+						 
+						study_type_code: 		    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() + &apos;_&apos; + msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						shift_code: 			    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() ,
+						
+						borneStudyLabel:	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						managerStudyLabel: 	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						alternativeCode: 	null,
+						recommendation: 	null,
+						studyGroupCode: 	null,							
+								
+						modality_code: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString(),
+						modality_text: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.2&apos;].toString(),
+						origin: 				null,
+						duration: 			msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.3&apos;].toString(), 
+						prescribing_doctor :     prescribing_doctor,
+						physician_doctor : physician_doctor 
+					 })
+			   }
+}	 	  
+
+channelMap.put(&apos;physician_doctor&apos;, physician_doctor )  
+
+channelMap.put(&apos;studies&apos;, studies );</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// dans le même messages pour certains éditeurs, il peut y avoir plusieurs examens les examens sont donc stocké dans un tableau 
+// on mappe donc un tableau d&apos;e&apos;examens 
+
+var studies = []
+var study_status_code
+
+
+// medecin precripteur
+var prescribing_doctor = {}
+
+/* PV1||O||||||A10020237120^VINCENT^JEAN PHILIPPE||TEN|||||||||
+
+PV1,8,1 : code RPPS ou N° ADELI ?
+
+PV1,8,2 : Nom de famille
+
+PV1,8,3: prenom
+ */
+
+
+if (msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0].toString().length &gt; 0  ) {
+	
+	prescribing_doctor = {
+		// a vérifier  est ce l&apos;ID d&apos;EDL ou le code RPPS en 1.8.1 ? A10102833092^RENAULD^FRANCOIS
+		&quot;rpps_number&quot;:	     msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.1&apos;].toString(),
+		&quot;last_name&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: 		msg[&apos;PV1&apos;][&apos;PV1.8&apos;][0][&apos;PV1.8.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+	}
+	
+}
+
+
+channelMap.put(&apos;prescribing_doctor&apos;, prescribing_doctor )
+
+
+var physician_doctor = {}
+
+
+ 
+
+
+// -------------------  ADT :  Identité et Mouvemùents Patient -------------------
+//  pas d&apos;informations sur les rendez-vous et examen dans un message patient 
+		
+ 
+
+// -------------------  SIU : Appointments -------------------
+// il peut y avoir plusieurs codes examens dans le même rendez-vous 
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos;)  {
+
+
+		if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S15&apos;  || 
+			    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S17&apos;  || 
+			    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() ==&apos;S26&apos;  )   {
+					study_status_code = &apos;CANCELED&apos;
+				}else{
+					study_status_code = &apos;SCHEDULED&apos;
+			}
+	// ------------------ AIP : Médecin radiologue qui fait l&apos;examen ---------------------
+
+
+if (msg[&apos;AIP&apos;][&apos;AIP.1&apos;].toString().length &gt; 0  ) {
+	
+	physician_doctor = {
+		&quot;rpps_number&quot;:	     msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.1&apos;].toString(),
+		&quot;last_name&quot;: 		msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.2&apos;].toString().replace(/&apos;/g, &quot; &quot;),
+		&quot;first_name&quot;: 		msg[&apos;AIP&apos;][&apos;AIP.3&apos;][&apos;AIP.3.3&apos;].toString().replace(/&apos;/g, &quot; &quot;)
+	}
+	
+}
+
+
+
+
+
+	for (var i = 0; i &lt; msg[&apos;AIS&apos;][&apos;AIS.3&apos;].length(); i++) {
+
+		studies.push({
+			appointment_number:   (msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString()  || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString()) +&quot;_&quot;+i , 
+			accession_number:     msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString()  || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString(), // pour les RDV internet qui change d&apos;ID dans EDL
+			// on fabrique un faux SUID pour que le dernier examens de l&apos;occurence
+			// ne réécrase par les précédent car il s ont tous le même access_number
+			instance_uid:  	 (msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.3&apos;].toString() ) +&quot;_&quot;+i ,
+			
+			
+			location_code:       msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.2&apos;].toString(),
+			location_label: 	 msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.9&apos;].toString(),
+			location_type_code: &apos;NOT_USED&apos;,
+			location_ticket_message: null,
+			location_paper_message: null,
+			
+			study_status_code:  		study_status_code,
+			//action_code : msg[&apos;AIS&apos;][&apos;AIS.2&apos;][i][&apos;AIS.2.1&apos;].toString()
+
+			//Pourquoi préfixé le study_type_code avec le facility ?
+			// Il faut préfixé par le code lieux
+			//study_type_code: 	msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()+ &apos;_&apos; +msg[&apos;AIS&apos;][&apos;AIS.3&apos;][&apos;AIS.3.1&apos;].toString(),
+			
+			// à CCN93 les code examen contiennt des / u des carateres spéciaux
+                
+			study_type_code: 	msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.2&apos;].toString() + &apos;_&apos; + msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.1&apos;].toString(),
+			//study_type_code: 	&apos; &apos;,
+			
+			shift_code: 		msg[&apos;AIL&apos;][&apos;AIL.3&apos;][&apos;AIL.3.1&apos;].toString(),
+
+			borneStudyLabel:	msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.2&apos;].toString(),
+			managerStudyLabel: 	msg[&apos;AIS&apos;][&apos;AIS.3&apos;][i][&apos;AIS.3.2&apos;].toString(),
+			alternativeCode: 	null,
+			recommendation: 	null,
+			studyGroupCode: 	null,			
+
+			scheduled_datetime:  dateParser( msg[&apos;AIS&apos;][&apos;AIS.4&apos;][i][&apos;AIS.4.1&apos;].toString()),
+			
+			modality_code: 	 msg[&apos;AIL&apos;][&apos;AIL.4&apos;][&apos;AIL.4.1&apos;].toString(),
+			modality_text: 	 msg[&apos;AIL&apos;][&apos;AIL.4&apos;][&apos;AIL.4.2&apos;].toString(),
+			
+			origin: 			msg[&apos;SCH&apos;][&apos;SCH.19&apos;][&apos;SCH.19.4&apos;][&apos;SCH.19.4.1&apos;].toString(),
+			duration: 		msg[&apos;AIS&apos;][&apos;AIS.7&apos;][&apos;AIS.7.1&apos;].toString(), 
+			prescribing_doctor:  prescribing_doctor,
+			physician_doctor : physician_doctor
+		})
+  	
+	}
+
+}
+	
+// -------------------  ORM : Studies-------------------	
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;) {
+		
+		if ( msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() ==&apos;CA&apos; ) {
+			study_status_code = &apos;CANCELED&apos;
+		   }
+		   else {
+			study_status_code = &apos;WAITING&apos;
+		   	
+		   }
+	
+	
+		for (var i = 0; i &lt; msg[&apos;OBR&apos;][&apos;OBR.4&apos;].length(); i++) {
+		
+					 studies.push({
+					 	appointment_number:      msg[&apos;ORC&apos;][&apos;ORC.3&apos;][&apos;ORC.3.1&apos;].toString() || msg[&apos;ORC&apos;][&apos;ORC.2&apos;][&apos;ORC.2.1&apos;].toString()  ,
+						accession_number:     	msg[&apos;ORC&apos;][&apos;ORC.3&apos;][&apos;ORC.3.1&apos;].toString() || msg[&apos;ORC&apos;][&apos;ORC.2&apos;][&apos;ORC.2.1&apos;].toString()  ,
+						instance_uid:  		msg[&apos;ZDS&apos;][&apos;ZDS.1&apos;][&apos;ZDS.1.1&apos;].toString() ,
+		
+						// c&apos;est la date réelle de démarrage de l&apos;examen qui est mise à jour à réception dde l&apos;ORM après accueil du RIS
+						scheduled_datetime:  	dateParser(msg[&apos;ORC&apos;][&apos;ORC.7&apos;][&apos;ORC.7.4&apos;].toString()) || dateParser(msg[&apos;ORC&apos;][&apos;ORC.15&apos;][&apos;ORC.15.1&apos;].toString()),
+						location_code:       	msg[&apos;ORC&apos;][&apos;ORC.17&apos;][&apos;ORC.17.1&apos;].toString(),
+						location_label: 		msg[&apos;ORC&apos;][&apos;ORC.17&apos;][&apos;ORC.17.2&apos;].toString(),
+						location_type_code: &apos;NOT_USED&apos;,
+						location_ticket_message: null,
+						location_paper_message: null,
+						
+						study_status_code: 			study_status_code,
+						/* CCM  concaténation CCB + code */
+						//Pourquoi préfixé le study_type_code avec le facility ?
+						// Il faut préfixé par le code lieux
+						//study_type_code: 		    msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;].toString()+ &apos;_&apos; +msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						study_type_code: 		    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() + &apos;_&apos; + msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						shift_code: 			    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() ,
+ 
+						borneStudyLabel:	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						managerStudyLabel: 	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						alternativeCode: 	null,
+						recommendation: 	null,
+						studyGroupCode: 	null,							
+						
+						modality_code: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString(),
+						modality_text: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.2&apos;].toString(),
+						origin: 				null,
+						duration: 			msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.3&apos;].toString(),
+						prescribing_doctor:     prescribing_doctor ,
+						physician_doctor : physician_doctor
+					 })
+	  	}
+}
+
+// ---- compte rendu  ------------//
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORU&apos;) {
+	
+		 /* compte rendu : si l&apos;examen est créé on le met a terminé */
+		 
+		for (var i = 0; i &lt; msg[&apos;OBR&apos;][&apos;OBR.4&apos;].length(); i++) {
+		
+					 studies.push({
+					 	appointment_number:      msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+						accession_number:     	msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() ,
+						instance_uid:            msg[&apos;ZDS&apos;][&apos;ZDS.1&apos;][&apos;ZDS.1.1&apos;].toString()||msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() +&quot;_&quot;+i ,
+		
+						// c&apos;est la date réelle de démarrage de l&apos;examen qui est mise à jour à réception dde l&apos;ORM après accueil du RIS
+						scheduled_datetime:  	dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString()),
+						location_code:       	msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString()||null ,
+						location_label: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString()||null,
+						location_type_code: &apos;NOT_USED&apos;,
+						location_ticket_message: null,
+						location_paper_message: null,
+						
+						study_status_code: 			&quot;DONE&quot;,
+						 
+						study_type_code: 		    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() + &apos;_&apos; + msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.1&apos;].toString(),
+						shift_code: 			    msg[&apos;OBR&apos;][&apos;OBR.24&apos;][i][&apos;OBR.24.1&apos;].toString() ,
+						
+						borneStudyLabel:	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						managerStudyLabel: 	msg[&apos;OBR&apos;][&apos;OBR.4&apos;][i][&apos;OBR.4.2&apos;].toString(),
+						alternativeCode: 	null,
+						recommendation: 	null,
+						studyGroupCode: 	null,							
+								
+						modality_code: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.1&apos;].toString(),
+						modality_text: 		msg[&apos;OBR&apos;][&apos;OBR.24&apos;][&apos;OBR.24.2&apos;].toString(),
+						origin: 				null,
+						duration: 			msg[&apos;OBR&apos;][&apos;OBR.27&apos;][&apos;OBR.27.3&apos;].toString(), 
+						prescribing_doctor :     prescribing_doctor,
+						physician_doctor : physician_doctor 
+					 })
+			   }
+}	 	  
+
+channelMap.put(&apos;physician_doctor&apos;, physician_doctor )  
+
+channelMap.put(&apos;studies&apos;, studies );</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>29</sequenceNumber>
+        <name>DOCUMENTS</name>
+        <script>var documents = []
+
+var study_AccNum_ToLink = null 
+var  link_level = null 
+var document_date =null
+var sourceDocument = &apos;ris&apos; 
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos; ) {
+	study_AccNum_ToLink =   msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+	document_date= dateParser(msg[&apos;SCH&apos;][&apos;SCH.11&apos;][&apos;SCH.11.4&apos;].toString())  
+	
+}
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;  ) {
+    study_AccNum_ToLink=   msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+    document_date= dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString())  
+
+}
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORU&apos; ) {
+	study_AccNum_ToLink =   msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+	document_date= dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString())  
+}
+
+
+if (study_AccNum_ToLink== null || study_AccNum_ToLink == &apos;&apos; ) {
+	link_level =&apos;PATIENT&apos;
+	}else {
+	link_level =&apos;STUDY&apos;
+}
+ 
+
+
+
+if(msg[&apos;OBX&apos;].toString().length &gt; 0) {
+	for (var i = 0; i &lt; msg[&apos;OBX&apos;].length(); i++) {
+		if(msg[&apos;OBX&apos;][i][&apos;OBX.2&apos;][&apos;OBX.2.1&apos;].toString()== &apos;ED&apos;) {   
+				documents.push({
+					documentTypeCode : 		msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.1&apos;].toString(),
+					documentTypeLibelle :	&apos;COMPTE RENDU&apos; ,   // msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.2&apos;].toString(),
+					documentContent :		msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.5&apos;].toString(),
+					targetFormat :			msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.3&apos;].toString(),
+					encodedFormat  :		msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.4&apos;].toString(),
+					studyAccNumToLink:		study_AccNum_ToLink,
+					linkLevel :   	   		link_level,
+					externalId: 			msg[&apos;OBR&apos;][&apos;OBR.20&apos;][&apos;OBR.20.1&apos;].toString(),
+					assigningAuthority: &apos;EDL&apos;,
+					identifiantTypeCode: &apos;CR&apos;  ,
+				     documentDate :    document_date,   
+					source : 	               sourceDocument
+				})
+	    }
+
+     }
+}
+
+channelMap.put(&apos;documents&apos;, documents)</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var documents = []
+
+var study_AccNum_ToLink = null 
+var  link_level = null 
+var document_date =null
+var sourceDocument = &apos;ris&apos; 
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;SIU&apos; ) {
+	study_AccNum_ToLink =   msg[&apos;SCH&apos;][&apos;SCH.27&apos;][&apos;SCH.27.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+	document_date= dateParser(msg[&apos;SCH&apos;][&apos;SCH.11&apos;][&apos;SCH.11.4&apos;].toString())  
+	
+}
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos;  ) {
+    study_AccNum_ToLink=   msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+    document_date= dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString())  
+
+}
+
+if ( msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORU&apos; ) {
+	study_AccNum_ToLink =   msg[&apos;OBR&apos;][&apos;OBR.3&apos;][&apos;OBR.3.1&apos;].toString() || msg[&apos;SCH&apos;][&apos;SCH.2&apos;][&apos;SCH.2.1&apos;].toString() 
+	document_date= dateParser(msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;].toString())  
+}
+
+
+if (study_AccNum_ToLink== null || study_AccNum_ToLink == &apos;&apos; ) {
+	link_level =&apos;PATIENT&apos;
+	}else {
+	link_level =&apos;STUDY&apos;
+}
+ 
+
+
+
+if(msg[&apos;OBX&apos;].toString().length &gt; 0) {
+	for (var i = 0; i &lt; msg[&apos;OBX&apos;].length(); i++) {
+		if(msg[&apos;OBX&apos;][i][&apos;OBX.2&apos;][&apos;OBX.2.1&apos;].toString()== &apos;ED&apos;) {   
+				documents.push({
+					documentTypeCode : 		msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.1&apos;].toString(),
+					documentTypeLibelle :	&apos;COMPTE RENDU&apos; ,   // msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.2&apos;].toString(),
+					documentContent :		msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.5&apos;].toString(),
+					targetFormat :			msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.3&apos;].toString(),
+					encodedFormat  :		msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.4&apos;].toString(),
+					studyAccNumToLink:		study_AccNum_ToLink,
+					linkLevel :   	   		link_level,
+					externalId: 			msg[&apos;OBR&apos;][&apos;OBR.20&apos;][&apos;OBR.20.1&apos;].toString(),
+					assigningAuthority: &apos;EDL&apos;,
+					identifiantTypeCode: &apos;CR&apos;  ,
+				     documentDate :    document_date,   
+					source : 	               sourceDocument
+				})
+	    }
+
+     }
+}
+
+channelMap.put(&apos;documents&apos;, documents)</string>
+          </entry>
+        </data>
+      </step>
+      <step>
+        <sequenceNumber>30</sequenceNumber>
+        <name>nextStep</name>
+        <script>//  Permet de déclencher le ReplaceStudies  et les nexStep qui vont transfomer les rendez-vous en examens, changer le patient de liste d&apos;attente 
+// admission du patient, examen termné, patient sorti
+
+//  les conditions sur les ORC sont spécifiques à chaques éditeur 
+
+var nextStep = null
+
+
+// -------------------  ORM : Studies  EDL EXPLORE-------------------	
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos; ){
+
+		
+	// annulation de l&apos;examen
+	if (  msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;CA&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;CA&apos; )  {
+              nextStep = &apos;CANCELED&apos;
+      }
+
+  	// examens terminés
+     if (msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;CM&apos; )  {
+              nextStep = &apos;STUDY_DONE&apos;
+      }
+	
+	// admission RIS
+ 
+     if (  msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;NW&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;SC&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;XO&apos;    )  {
+               
+  		 if (msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;IP&apos; )  {
+              nextStep = &apos;ADMITTED&apos;
+              admit_date_time = dateParser(msg[&apos;ORC&apos;][&apos;ORC.7&apos;][&apos;ORC.7.4&apos;].toString())
+           }
+ 
+     } 
+
+          
+ } 
+   
+
+// admission canceled
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ADT&apos; &amp;&amp; 
+    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() == &apos;A11&apos;      ) {
+       nextStep = &apos;ADMISSION_CANCELED&apos;
+    }
+
+channelMap.put(&apos;nextStep&apos;, nextStep );</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>//  Permet de déclencher le ReplaceStudies  et les nexStep qui vont transfomer les rendez-vous en examens, changer le patient de liste d&apos;attente 
+// admission du patient, examen termné, patient sorti
+
+//  les conditions sur les ORC sont spécifiques à chaques éditeur 
+
+var nextStep = null
+
+
+// -------------------  ORM : Studies  EDL EXPLORE-------------------	
+
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ORM&apos; ){
+
+		
+	// annulation de l&apos;examen
+	if (  msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;CA&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;CA&apos; )  {
+              nextStep = &apos;CANCELED&apos;
+      }
+
+  	// examens terminés
+     if (msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;CM&apos; )  {
+              nextStep = &apos;STUDY_DONE&apos;
+      }
+	
+	// admission RIS
+ 
+     if (  msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;NW&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;SC&apos; || 
+           msg[&apos;ORC&apos;][&apos;ORC.1&apos;][&apos;ORC.1.1&apos;].toString() == &apos;XO&apos;    )  {
+               
+  		 if (msg[&apos;ORC&apos;][&apos;ORC.5&apos;][&apos;ORC.5.1&apos;].toString() == &apos;IP&apos; )  {
+              nextStep = &apos;ADMITTED&apos;
+              admit_date_time = dateParser(msg[&apos;ORC&apos;][&apos;ORC.7&apos;][&apos;ORC.7.4&apos;].toString())
+           }
+ 
+     } 
+
+          
+ } 
+   
+
+// admission canceled
+if (msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;].toString() == &apos;ADT&apos; &amp;&amp; 
+    msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.2&apos;].toString() == &apos;A11&apos;      ) {
+       nextStep = &apos;ADMISSION_CANCELED&apos;
+    }
+
+channelMap.put(&apos;nextStep&apos;, nextStep );</string>
+          </entry>
+        </data>
+      </step>
+    </steps>
+    <inboundTemplate encoding="base64">TVNIfF5+XCZ8fHx8fDIwMjMxMjE0MTUwNTM3fHxTSVVeUzEyfDIwMjMxMjE0MTIwMzMzN3xQfDIu
+NS4xfHx8fHx8VVRGLTgNU0NIfDIwMjMtMTItMTRUMTUtMDQtMTYtOTAxLTE2Mzk4NTBAOTE0ODUz
+NTA2NzQ5Xl4xNjM5ODUwfDIwMjMtMTItMTRUMTUtMDQtMTYtOTAxLTE2Mzk4NTBAOTE0ODUzNTA2
+NzQ5Xl4xNjM5ODUwfHx8fFNDXkFwcG9pbnRtZW50IHdhcyBjcmVhdGVkLnxeVFRUIFBsYW5JbmNs
+aW5lfF5TY2hlZHVsYWJsZUFjdGl2aXR5fDE1fE18Xl5eMjAyNDAyMTUxOTMwMDBeMjAyNDAyMTUx
+OTQ1MDB8fHx8fGNhbF5MYWJydXF1ZXJlXkNhcm9sZXx8fHxjYWxeTGFicnVxdWVyZV5DYXJvbGV8
+fHx8fEJvb2tlZF5PcGVuXl5eQWN0aXZlDVBJRHwxfHwyMDIzMTYzMHx8QlJVTkVMXkF1cmVsaWV+
+QlJVTkVMXl5eXl5eTXx8MTk4NDA5MTUwMDAwMDB8Rnx8fDYgUlVFIERFIENBTkRPTExFXk1BSVNP
+TiA4XkJBWU9OTkVeQ1BBTSBCYXlvbm5lIF42NDEwMF5eSF5eYXVyZWxpZS1icnVuZWxAaG90bWFp
+bC5mcnx8MDYgNzQgNjEgMTggMjZeXkNQfl5ORVReSW50ZXJuZXReYXVyZWxpZS1icnVuZWxAaG90
+bWFpbC5mcnx8fHx8fDI4NDA5NjQxMDIxMDM1OHx8fHxCQVlPTk5FIA1QVjF8MXxPfF5eXkNlbnRy
+ZSBPbmNvbG9naWVeXl5SYWRpb3RoZXJhcGllfHx8fDEwMTAwNTMwOTEzXkdFTkVCRVNeQ2Fyb2xp
+bmVeXkRyXkRvY3RldXJeXl5eTF5eXkROfl5DYXJvbGluZSBHRU5FQkVTXl5eXl5eXl5EfERJQy0z
+ODI5XkJST0NBUkReTWFyaWUgUGllcnJlXl5eRG9jdGV1cl5eXl5MXl5eRE5+XkRyIE1hcmllIFBp
+ZXJyZSBCUk9DQVJEXl5eXl5eXl5EfHx8fHxOZXx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8
+fHwyMDIzMTIwNjAwMDAwMA1SR1N8MQ1BSVN8MXx8VFRUIEFJTyBzZWluIHNldWxeVFRUIFBsYW5J
+bmNsaW5lXl5UVFQgQUlPIHNlaW4gc2V1bF5UcmVhdG1lbnR8MjAyNDAyMTUxOTMwMDB8fHwxNXxN
+fHx8fF5eXlJhZGlvdGhlcmFwaWVeQ2VudHJlIE9uY29sb2dpZQ1BSUx8MXx8VVJVQklBXl5eXl5e
+Xl5eVVJVQklBfF5SYWRpYXRpb25EZXZpY2VeXl5NYWNoaW5lfHwyMDI0MDIxNTE5MzAwMHx8fDE1
+fE0=</inboundTemplate>
+    <outboundTemplate encoding="base64"></outboundTemplate>
+    <inboundDataType>HL7V2</inboundDataType>
+    <outboundDataType>JSON</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.4.2">
+      <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.4.2">
+        <splitType>JavaScript</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+    </outboundProperties>
+  </transformer>
+  <responseTransformer version="3.4.2">
+    <steps>
+      <step>
+        <sequenceNumber>0</sequenceNumber>
+        <name>New Step</name>
+        <script>// Pour ne pas réinitialiser les variables du transformer suivant</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>// Pour ne pas réinitialiser les variables du transformer suivant</string>
+          </entry>
+        </data>
+      </step>
+    </steps>
+    <inboundTemplate encoding="base64"></inboundTemplate>
+    <outboundTemplate encoding="base64"></outboundTemplate>
+    <inboundDataType>HL7V2</inboundDataType>
+    <outboundDataType>HL7V2</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.4.2">
+      <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.4.2">
+        <handleRepetitions>true</handleRepetitions>
+        <handleSubcomponents>true</handleSubcomponents>
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <stripNamespaces>true</stripNamespaces>
+        <segmentDelimiter>\r</segmentDelimiter>
+        <convertLineBreaks>true</convertLineBreaks>
+      </serializationProperties>
+      <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.4.2">
+        <useStrictParser>false</useStrictParser>
+        <useStrictValidation>false</useStrictValidation>
+        <segmentDelimiter>\r</segmentDelimiter>
+      </deserializationProperties>
+      <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.4.2">
+        <splitType>MSH_Segment</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+      <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.4.2">
+        <segmentDelimiter>\r</segmentDelimiter>
+        <successfulACKCode>AA</successfulACKCode>
+        <successfulACKMessage></successfulACKMessage>
+        <errorACKCode>AE</errorACKCode>
+        <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
+        <rejectedACKCode>AR</rejectedACKCode>
+        <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
+        <msh15ACKAccept>false</msh15ACKAccept>
+        <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
+      </responseGenerationProperties>
+      <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.4.2">
+        <successfulACKCode>AA,CA</successfulACKCode>
+        <errorACKCode>AE,CE</errorACKCode>
+        <rejectedACKCode>AR,CR</rejectedACKCode>
+        <validateMessageControlId>true</validateMessageControlId>
+        <originalMessageControlId>Destination_Encoded</originalMessageControlId>
+        <originalIdMapVariable></originalIdMapVariable>
+      </responseValidationProperties>
+    </outboundProperties>
+  </responseTransformer>
+  <filter version="3.4.2">
+    <rules/>
+  </filter>
+  <transportName>JavaScript Writer</transportName>
+  <mode>DESTINATION</mode>
+  <enabled>true</enabled>
+  <waitForPrevious>true</waitForPrevious>
+</connector>

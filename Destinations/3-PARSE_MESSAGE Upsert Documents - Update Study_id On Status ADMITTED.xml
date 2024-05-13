@@ -1,0 +1,200 @@
+<connector version="3.4.2">
+  <metaDataId>133</metaDataId>
+  <name>Upsert Documents - Update Study_id On Status ADMITTED</name>
+  <properties class="com.mirth.connect.connectors.jdbc.DatabaseDispatcherProperties" version="3.4.2">
+    <pluginProperties/>
+    <destinationConnectorProperties version="3.4.2">
+      <queueEnabled>false</queueEnabled>
+      <sendFirst>false</sendFirst>
+      <retryIntervalMillis>10000</retryIntervalMillis>
+      <regenerateTemplate>false</regenerateTemplate>
+      <retryCount>0</retryCount>
+      <rotate>false</rotate>
+      <includeFilterTransformer>false</includeFilterTransformer>
+      <threadCount>1</threadCount>
+      <threadAssignmentVariable></threadAssignmentVariable>
+      <validateResponse>false</validateResponse>
+      <resourceIds class="linked-hash-map">
+        <entry>
+          <string>Default Resource</string>
+          <string>[Default Resource]</string>
+        </entry>
+      </resourceIds>
+      <queueBufferSize>1000</queueBufferSize>
+    </destinationConnectorProperties>
+    <driver>com.mysql.jdbc.Driver</driver>
+    <url>${database_url}</url>
+    <username>${database_login}</username>
+    <password>Dyn@mic69</password>
+    <query>UPDATE bea.document 
+SET study_id = (select id from bea.study where study_instance_uid = ${study_instance_uid} LIMIT 1)
+WHERE
+    patient_id = ${patient_id}
+     AND study_id is null 
+     AND DATE_FORMAT(`document`.`created_at`, &apos;%Y-%m-%d&apos;) = CURDATE();
+</query>
+    <useScript>false</useScript>
+  </properties>
+  <transformer version="3.4.2">
+    <steps>
+      <step>
+        <sequenceNumber>0</sequenceNumber>
+        <name>New Step</name>
+        <script>var updateStudyIdInDocument;
+
+updateStudyIdInDocument = 1;
+channelMap.put (&apos;updateStudyIdInDocument&apos;, updateStudyIdInDocument);</script>
+        <type>JavaScript</type>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>var updateStudyIdInDocument;
+
+updateStudyIdInDocument = 1;
+channelMap.put (&apos;updateStudyIdInDocument&apos;, updateStudyIdInDocument);</string>
+          </entry>
+        </data>
+      </step>
+    </steps>
+    <inboundTemplate encoding="base64"></inboundTemplate>
+    <outboundTemplate encoding="base64"></outboundTemplate>
+    <inboundDataType>JSON</inboundDataType>
+    <outboundDataType>JSON</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.4.2">
+      <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.4.2">
+        <splitType>JavaScript</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.4.2">
+      <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.4.2">
+        <splitType>JavaScript</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+    </outboundProperties>
+  </transformer>
+  <responseTransformer version="3.4.2">
+    <steps/>
+    <inboundDataType>JSON</inboundDataType>
+    <outboundDataType>JSON</outboundDataType>
+    <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.4.2">
+      <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.4.2">
+        <splitType>JavaScript</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+    </inboundProperties>
+    <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.4.2">
+      <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.4.2">
+        <splitType>JavaScript</splitType>
+        <batchScript></batchScript>
+      </batchProperties>
+    </outboundProperties>
+  </responseTransformer>
+  <filter version="3.4.2">
+    <rules>
+      <rule>
+        <sequenceNumber>0</sequenceNumber>
+        <name>Message HL7 = ORM</name>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>if($(&apos;messageHeader&apos;)[&apos;messageType&apos;] == &apos;ORM&apos;){	
+		return true
+		}
+	else{
+		return false
+	}</string>
+          </entry>
+        </data>
+        <type>JavaScript</type>
+        <script>if($(&apos;messageHeader&apos;)[&apos;messageType&apos;] == &apos;ORM&apos;){	
+		return true
+		}
+	else{
+		return false
+	}</script>
+        <operator>NONE</operator>
+      </rule>
+      <rule>
+        <sequenceNumber>1</sequenceNumber>
+        <name>Patient créé</name>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>if ( $(&apos;patient_id&apos;) &amp;&amp; $(&apos;patient_id&apos;) !=&apos;&apos;  ) {
+	 
+	 return true;
+}
+return false;</string>
+          </entry>
+        </data>
+        <type>JavaScript</type>
+        <script>if ( $(&apos;patient_id&apos;) &amp;&amp; $(&apos;patient_id&apos;) !=&apos;&apos;  ) {
+	 
+	 return true;
+}
+return false;</script>
+        <operator>AND</operator>
+      </rule>
+      <rule>
+        <sequenceNumber>2</sequenceNumber>
+        <name>$(&apos;study_instance_uid&apos;) est non vide</name>
+        <data>
+          <entry>
+            <string>Script</string>
+            <string>if ( $(&apos;study_instance_uid&apos;) &amp;&amp; ($(&apos;study_instance_uid&apos;) !=&apos;&apos; || $(&apos;study_instance_uid&apos;) != null )) {
+	 
+	 return true;
+}
+return false;</string>
+          </entry>
+        </data>
+        <type>JavaScript</type>
+        <script>if ( $(&apos;study_instance_uid&apos;) &amp;&amp; ($(&apos;study_instance_uid&apos;) !=&apos;&apos; || $(&apos;study_instance_uid&apos;) != null )) {
+	 
+	 return true;
+}
+return false;</script>
+        <operator>AND</operator>
+      </rule>
+      <rule>
+        <sequenceNumber>3</sequenceNumber>
+        <name>Accept message if &quot;$(&apos;nextStep&apos;)&quot; equals &apos;ADMITTED&apos;</name>
+        <data>
+          <entry>
+            <string>Field</string>
+            <string>$(&apos;nextStep&apos;)</string>
+          </entry>
+          <entry>
+            <string>Name</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>OriginalField</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>Equals</string>
+            <string>1</string>
+          </entry>
+          <entry>
+            <string>Values</string>
+            <list>
+              <string>&apos;ADMITTED&apos;</string>
+            </list>
+          </entry>
+        </data>
+        <type>Rule Builder</type>
+        <script>if($(&apos;nextStep&apos;) == &apos;ADMITTED&apos;) {
+	return true;
+}
+return false;</script>
+        <operator>AND</operator>
+      </rule>
+    </rules>
+  </filter>
+  <transportName>Database Writer</transportName>
+  <mode>DESTINATION</mode>
+  <enabled>true</enabled>
+  <waitForPrevious>true</waitForPrevious>
+</connector>
